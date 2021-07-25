@@ -17,10 +17,16 @@ fi
 # install prerequisite programs
 sudo apt install dos2unix --yes
 
-# check dos2unix is installed
+# check prerequisite programs installed
 command -v dos2unix >/dev/null 2>&1 || {
     echo >&2 "dos2unix is not installed"
     exit 1
+}
+
+# check python is in path
+command -v python >/dev/null 2>&1 || {
+    # if not found, symlink python3
+    sudo ln -s /usr/bin/python3 /usr/bin/python
 }
 
 # fix any file format problems in scripts
