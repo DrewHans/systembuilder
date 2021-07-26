@@ -10,7 +10,7 @@ scripts_repo_url="${gitserver}/${scripts_repo_name}"
 
 # exit if not running as root
 if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-    echo "You must run this script as root"
+    echo "Error: You must run this script as root"
     exit 1
 fi
 
@@ -23,22 +23,26 @@ echo ""
 command -v dos2unix >/dev/null 2>&1 || {
     echo "Installing prerequisite program: dos2unix"
     sudo apt install dos2unix --yes
+    echo ""
 }
 
 command -v curl >/dev/null 2>&1 || {
     echo "Installing prerequisite program: curl"
     sudo apt install curl --yes
+    echo ""
 }
 
 command -v wget >/dev/null 2>&1 || {
     echo "Installing prerequisite program: wget"
     sudo apt install wget --yes
+    echo ""
 }
 
 # check python is in path
 command -v python >/dev/null 2>&1 || {
     echo "Symlinking python3 to python"
     sudo ln -s /usr/bin/python3 /usr/bin/python
+    echo ""
 }
 
 # fix any file format problems in systembuilder scripts
@@ -50,9 +54,8 @@ echo ""
 for f in ./apps/*/preinstall.sh; do
     echo "Running ${f}"
     sudo bash $f
+    echo ""
 done
-
-echo ""
 
 # download latest package info from apt repos
 echo "Preinstall scripts finished; Refreshing apt"
