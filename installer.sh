@@ -63,30 +63,30 @@ echo "Install scripts finished; Running autoremove"
 sudo apt autoremove --yes
 
 # create Code dir (as user) if it does not exist
-[ -d ~/Code ] || {
+[ -d /home/${sudo_user_username}/Code ] || {
     sudo -u ${sudo_user_username} \
-        mkdir ~/Code
+        mkdir /home/${sudo_user_username}/Code
 }
 
 # check git is now installed
 command -v git >/dev/null 2>&1 && {
     # install dotfiles (as user)
     sudo -u ${sudo_user_username} \
-        git clone ${dotfiles_repo_url} ~/Code/${dotfiles_repo_name}
+        git clone ${dotfiles_repo_url} /home/${sudo_user_username}/Code/${dotfiles_repo_name}
 
-    dos2unix ~/Code/${dotfiles_repo_name}/installer.sh
+    dos2unix /home/${sudo_user_username}/Code/${dotfiles_repo_name}/installer.sh
 
     sudo -u ${sudo_user_username} \
-        bash ~/Code/${dotfiles_repo_name}/installer.sh
+        bash /home/${sudo_user_username}/Code/${dotfiles_repo_name}/installer.sh
 
     # install shellscripts (as user)
     sudo -u ${sudo_user_username} \
-        git clone ${scripts_repo_url} ~/Code/${dotfiles_repo_name}
+        git clone ${scripts_repo_url} /home/${sudo_user_username}/Code/${dotfiles_repo_name}
 
-    dos2unix ~/Code/${scripts_repo_name}/installer.sh
+    dos2unix /home/${sudo_user_username}/Code/${scripts_repo_name}/installer.sh
 
     sudo -u ${sudo_user_username} \
-        bash ~/Code/${scripts_repo_name}/installer.sh
+        bash /home/${sudo_user_username}/Code/${scripts_repo_name}/installer.sh
 }
 
 # display helpful message if git is not found
