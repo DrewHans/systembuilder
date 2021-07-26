@@ -17,6 +17,8 @@ fi
 echo "Refreshing apt"
 sudo apt update
 
+echo ""
+
 # check prerequisite programs installed
 command -v dos2unix >/dev/null 2>&1 || {
     echo "Installing prerequisite program: dos2unix"
@@ -42,15 +44,21 @@ command -v python >/dev/null 2>&1 || {
 # fix any file format problems in systembuilder scripts
 find ./apps -name '*.sh' -type f -print0 | xargs -0 dos2unix --
 
+echo ""
+
 # run preinstall scripts
 for f in ./apps/*/preinstall.sh; do
     echo "Running ${f}"
     sudo bash $f
 done
 
+echo ""
+
 # download latest package info from apt repos
 echo "Preinstall scripts finished; Refreshing apt"
 sudo apt update
+
+echo ""
 
 # install apps
 for f in ./apps/*/install.sh; do
@@ -58,33 +66,49 @@ for f in ./apps/*/install.sh; do
     sudo bash $f
 done
 
+echo ""
+
 # remove any obsolete packages
 echo "Install scripts finished; Running autoremove"
 sudo apt autoremove --yes
 
+echo ""
+
 # create Code dir (as user) if it does not exist
 [ -d /home/${sudo_user_username}/Code ] || {
+    echo "Making Code directory for ${sudo_user_username}"
     sudo -u ${sudo_user_username} \
         mkdir /home/${sudo_user_username}/Code
 }
 
+echo ""
+
 # check git is now installed
 command -v git >/dev/null 2>&1 && {
     # install dotfiles (as user)
+    echo "Cloning ${dotfiles_repo_name}"
     sudo -u ${sudo_user_username} \
         git clone ${dotfiles_repo_url} /home/${sudo_user_username}/Code/${dotfiles_repo_name}
 
+    echo "Fixing ${dotfiles_repo_name} files with dos2unix"
     dos2unix /home/${sudo_user_username}/Code/${dotfiles_repo_name}/installer.sh
 
+    echo ""
+    echo "Running ${dotfiles_repo_name} installer.sh"
     sudo -u ${sudo_user_username} \
         bash /home/${sudo_user_username}/Code/${dotfiles_repo_name}/installer.sh
 
+    echo ""
+
     # install shellscripts (as user)
+    echo "Cloning ${scripts_repo_name}"
     sudo -u ${sudo_user_username} \
         git clone ${scripts_repo_url} /home/${sudo_user_username}/Code/${dotfiles_repo_name}
 
+    echo "Fixing ${scripts_repo_name} files with dos2unix"
     dos2unix /home/${sudo_user_username}/Code/${scripts_repo_name}/installer.sh
 
+    echo "Running ${scripts_repo_name} installer.sh"
     sudo -u ${sudo_user_username} \
         bash /home/${sudo_user_username}/Code/${scripts_repo_name}/installer.sh
 }
