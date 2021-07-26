@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# set script variables
+# set temporary script variables
 sudo_user_username=${SUDO_USER:-$USER} # user who ran this installer with sudo
 gitserver="https://github.com/DrewHans"
 dotfiles_repo_name="dotfiles"
@@ -56,7 +56,6 @@ for f in ./apps/*/preinstall.sh; do
     echo ""
 done
 
-# download latest package info from apt repos
 echo "Preinstall scripts finished; Refreshing apt"
 sudo apt update
 echo ""
@@ -73,6 +72,16 @@ echo "Install scripts finished; Running autoremove"
 sudo apt autoremove --yes
 echo ""
 
+# check if vscode is installed
+command -v code >/dev/null 2>&1 && {
+    echo "installing vscode extensions"
+    code --install-extension material-icon-theme
+    code --install-extension ms-vscode.cpptools
+    code --install-extension ms-python.python
+    code --install-extension ms-python.vscode-pylance
+    echo ""
+}
+
 # create Code dir (as user) if it does not exist
 [ -d /home/${sudo_user_username}/Code ] || {
     echo "Making Code directory for ${sudo_user_username} as ${sudo_user_username}"
@@ -81,7 +90,7 @@ echo ""
     echo ""
 }
 
-# check git is now installed
+# check if git is installed
 command -v git >/dev/null 2>&1 && {
 
     cd /home/${sudo_user_username}/Code
