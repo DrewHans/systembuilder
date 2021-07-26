@@ -14,38 +14,52 @@ if [[ $(/usr/bin/id -u) -ne 0 ]]; then
     exit 1
 fi
 
-# install prerequisite programs
-sudo apt install dos2unix --yes
+echo "Refreshing apt"
+sudo apt update
 
 # check prerequisite programs installed
 command -v dos2unix >/dev/null 2>&1 || {
-    echo >&2 "dos2unix is not installed"
-    exit 1
+    echo "Installing prerequisite program: dos2unix"
+    sudo apt install dos2unix --yes
+}
+
+command -v curl >/dev/null 2>&1 || {
+    echo "Installing prerequisite program: curl"
+    sudo apt install curl --yes
+}
+
+command -v wget >/dev/null 2>&1 || {
+    echo "Installing prerequisite program: wget"
+    sudo apt install wget --yes
 }
 
 # check python is in path
 command -v python >/dev/null 2>&1 || {
-    # if not found, symlink python3
+    echo "Symlinking python3 to python"
     sudo ln -s /usr/bin/python3 /usr/bin/python
 }
 
-# fix any file format problems in scripts
+# fix any file format problems in systembuilder scripts
 find ./apps -name '*.sh' -type f -print0 | xargs -0 dos2unix --
 
 # run preinstall scripts
 for f in ./apps/*/preinstall.sh; do
+    echo "Running ${f}"
     sudo bash $f
 done
 
 # download latest package info from apt repos
+echo "Preinstall scripts finished; Refreshing apt"
 sudo apt update
 
 # install apps
 for f in ./apps/*/install.sh; do
+    echo "Running ${f}"
     sudo bash $f
 done
 
 # remove any obsolete packages
+echo "Install scripts finished; Running autoremove"
 sudo apt autoremove --yes
 
 # create Code dir (as user) if it does not exist
