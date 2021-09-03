@@ -145,11 +145,9 @@ command -v git >/dev/null 2>&1 || {
 }
 
 # stop computer from automatically fetching updates on login
-systemctl stop apt-daily.timer
-systemctl disable apt-daily.timer
-
-systemctl stop apt-daily-upgrade.timer
-systemctl disable apt-daily-upgrade.timer
+systemctl stop apt-daily.service apt-daily-upgrade.service
+systemctl disable apt-daily.service apt-daily-upgrade.service
+systemctl disable apt-daily.timer apt-daily-upgrade.timer
 
 echo "systembuilder complete"
 
