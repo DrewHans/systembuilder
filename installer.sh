@@ -45,6 +45,13 @@ command -v python >/dev/null 2>&1 || {
     echo ""
 }
 
+# check pip is in path
+command -v pip >/dev/null 2>&1 || {
+    echo "Symlinking pip3 to pip"
+    sudo ln -s /usr/bin/pip3 /usr/bin/pip
+    echo ""
+}
+
 # fix any file format problems in systembuilder scripts
 find ./apps -name '*.sh' -type f -print0 | xargs -0 dos2unix --
 echo ""
