@@ -74,29 +74,17 @@ for f in ./apps/*/install.sh; do
     echo ""
 done
 
+# run postinstall scripts
+for f in ./apps/*/postinstall.sh; do
+    echo "Running ${f}"
+    sudo bash $f
+    echo ""
+done
+
 # remove any obsolete packages
 echo "Install scripts finished; Running autoremove"
 sudo apt autoremove --yes
 echo ""
-
-# check if vscode is installed
-command -v code >/dev/null 2>&1 && {
-    echo "installing vscode extensions"
-
-    sudo -u ${sudo_user_username} \
-        code --install-extension material-icon-theme
-
-    sudo -u ${sudo_user_username} \
-        code --install-extension ms-vscode.cpptools
-
-    sudo -u ${sudo_user_username} \
-        code --install-extension ms-python.python
-
-    sudo -u ${sudo_user_username} \
-        code --install-extension ms-python.vscode-pylance
-
-    echo ""
-}
 
 # create Code dir (as user) if it does not exist
 [ -d /home/${sudo_user_username}/Code ] || {
