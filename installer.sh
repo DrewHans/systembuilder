@@ -15,10 +15,6 @@ if [[ $(/usr/bin/id -u) -ne 0 ]]; then
     exit 1
 fi
 
-echo "Refreshing apt"
-sudo apt update
-echo ""
-
 # check prerequisite programs installed
 command -v dos2unix >/dev/null 2>&1 || {
     echo "Installing prerequisite program: dos2unix"
@@ -52,37 +48,40 @@ command -v pip >/dev/null 2>&1 || {
     echo ""
 }
 
-# fix any file format problems in systembuilder scripts
+echo "Running dos2unix on all scripts"
 find ./apps -name '*.sh' -type f -print0 | xargs -0 dos2unix --
 echo ""
 
-# run preinstall scripts
+echo "Running apt update"
+sudo apt update
+echo ""
+
+echo "Running preinstall scripts"
 for f in ./apps/*/preinstall.sh; do
     echo "Running ${f}"
     sudo bash $f
     echo ""
 done
 
-echo "Preinstall scripts finished; Refreshing apt"
+echo "Running apt update"
 sudo apt update
 echo ""
 
-# install apps
+echo "Running install scripts"
 for f in ./apps/*/install.sh; do
     echo "Running ${f}"
     sudo bash $f
     echo ""
 done
 
-# run postinstall scripts
+echo "Running postinstall scripts"
 for f in ./apps/*/postinstall.sh; do
     echo "Running ${f}"
     sudo bash $f
     echo ""
 done
 
-# remove any obsolete packages
-echo "Install scripts finished; Running autoremove"
+echo "Running apt autoremove"
 sudo apt autoremove --yes
 echo ""
 
