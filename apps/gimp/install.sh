@@ -8,5 +8,5 @@ command -v flatpak >/dev/null 2>&1 && {
 
 # if flatpak is not found
 command -v flatpak >/dev/null 2>&1 || {
-    echo "Error: flatpak not found; you need to manually install gimp;"
+    echo "Error: flatpak not found; you need to manually install GIMP;"
 }
