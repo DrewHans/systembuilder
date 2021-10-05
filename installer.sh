@@ -81,6 +81,10 @@ for f in ./apps/*/postinstall.sh; do
     echo ""
 done
 
+echo "Running apt clean"
+sudo apt clean --yes
+echo ""
+
 echo "Running apt autoremove"
 sudo apt autoremove --yes
 echo ""

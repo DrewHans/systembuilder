@@ -3,10 +3,10 @@
 # if flatpak is on system
 command -v flatpak >/dev/null 2>&1 && {
     # install through flatpak
-    sudo -u ${SUDO_USER:-$USER} flatpak install flathub org.videolan.VLC
+    sudo -u ${SUDO_USER:-$USER} flatpak install flathub org.libreoffice.LibreOffice
 }
 
 # if flatpak is not found
 command -v flatpak >/dev/null 2>&1 || {
-    echo "Error: flatpak not found; you need to manually install vlc;"
+    echo "Error: flatpak not found; you need to manually install libreoffice;"
 }
