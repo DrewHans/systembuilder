@@ -1,0 +1,4 @@
+# declare how to handle line endings here so we don't have to rely on .gitconfig
+
+# treat all files like text and auto convert to OS's line ending during checkout
+* text=auto
