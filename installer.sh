@@ -56,6 +56,10 @@ echo "Running apt update"
 sudo apt update
 echo ""
 
+echo "Updating flatpak"
+sudo -u ${sudo_user_username} flatpak update --assumeyes
+echo ""
+
 echo "Running preinstall scripts"
 for f in ./apps/*/preinstall.sh; do
     echo "Running ${f}"
