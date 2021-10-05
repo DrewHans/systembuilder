@@ -3,7 +3,7 @@
 # if flatpak is on system
 command -v flatpak >/dev/null 2>&1 && {
     # install through flatpak
-    sudo -u ${SUDO_USER:-$USER} flatpak install flathub org.videolan.VLC
+    sudo -u ${SUDO_USER:-$USER} flatpak install flathub org.videolan.VLC --assumeyes
 }
 
 # if flatpak is not found

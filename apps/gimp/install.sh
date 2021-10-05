@@ -3,7 +3,7 @@
 # if flatpak is on system
 command -v flatpak >/dev/null 2>&1 && {
     # install through flatpak
-    sudo -u ${SUDO_USER:-$USER} flatpak install flathub org.gimp.GIMP
+    sudo -u ${SUDO_USER:-$USER} flatpak install flathub org.gimp.GIMP --assumeyes
 }
 
 # if flatpak is not found

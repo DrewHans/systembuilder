@@ -3,8 +3,7 @@
 # if flatpak is on system
 command -v flatpak >/dev/null 2>&1 && {
     # install through flatpak
-    sudo -u ${SUDO_USER:-$USER} \
-        flatpak install flathub io.mpv.Mpv
+    sudo -u ${SUDO_USER:-$USER} flatpak install flathub io.mpv.Mpv --assumeyes
 }
 
 # if flatpak is not found
