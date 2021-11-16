@@ -56,6 +56,10 @@ echo "Running apt update"
 sudo apt update
 echo ""
 
+echo "Adding flathub repo to flatpak"
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+echo ""
+
 echo "Updating flatpak"
 sudo -u ${sudo_user_username} flatpak update --assumeyes
 echo ""

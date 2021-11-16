@@ -5,4 +5,7 @@ sudo -u ${SUDO_USER:-$USER} \
 
 chmod u+x nvim.appimage
 
+mkdir -p /home/${SUDO_USER:-$USER}/.local/bin/
+
 mv nvim.appimage /home/${SUDO_USER:-$USER}/.local/bin/nvim
+
