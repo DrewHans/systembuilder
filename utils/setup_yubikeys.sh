@@ -79,7 +79,7 @@ echo ""
 # require a Yubikey for login
 echo "Updating up the system's PAM file"
 insertstr="auth	required	pam_u2f.so	authfile=/etc/Yubico/u2f_keys"
-sudo sed "/^@include common-auth/a $insertstr" /etc/pam.d/gdm-password >> /etc/pam.d/gdm-password
+sudo sed -i "/^@include common-auth/a $insertstr" /etc/pam.d/gdm-password
 echo ""
 
 echo "Finished; you will now need a Yubikey to login"
