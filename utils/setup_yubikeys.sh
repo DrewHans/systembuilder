@@ -4,7 +4,13 @@
 # https://support.yubico.com/hc/en-us/articles/360016649099-Ubuntu-Linux-Login-Guide-U2F
 
 # set temporary script variables
-sudo_user_username=${SUDO_USER:-$USER} # user who ran this script with sudo
+sudo_user=${SUDO_USER:-$USER} # user who ran this script with sudo
+
+# exit if not running as root
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+    echo "Error: You must run this script as root"
+    exit 1
+fi
 
 # check prerequisite programs installed
 command -v pamu2fcfg >/dev/null 2>&1 || {
@@ -16,17 +22,25 @@ function associate_yubikey() {
     echo "Hit enter when you are ready to start:"
     read input
     echo "When your device begins flashing, touch the metal contact"
-    pamu2fcfg >> /home/${sudo_user_username}/.config/Yubico/u2f_keys
+    sudo -u ${sudo_user} \
+        pamu2fcfg >> /home/${sudo_user}/.config/Yubico/u2f_keys
     echo ""
 }
 
+echo "Starting $0"
+
 # create Yubico dir (as user) if it does not exist
-[ -d /home/${sudo_user_username}/.config/Yubico ] || {
+[ -d /home/${sudo_user}/.config/Yubico ] || {
     echo "Making Yubico directory to store u2f_keys"
-    sudo -u ${sudo_user_username} \
-        mkdir -p /home/${sudo_user_username}/.config/Yubico
+    sudo -u ${sudo_user} \
+        mkdir -p /home/${sudo_user}/.config/Yubico
     echo ""
 }
+
+echo "Making u2f_keys file to store yubikey association data"
+sudo -u ${sudo_user} \
+    touch /home/${sudo_user}/.config/Yubico/u2f_keys
+echo ""
 
 # make our Yubikeys work with U2F PAM module
 echo "Please insert your first Yubikey into the computer"
@@ -38,12 +52,24 @@ associate_yubikey
 echo "Yubikey association complete"
 echo ""
 
+# create /etc/Yubico dir if it does not exist
+[ -d /etc/Yubico ] || {
+    echo "Making /etc/Yubico directory to store u2f_keys file"
+    mkdir -p /etc/Yubico
+    echo ""
+}
+
 # copy u2f_keys file to a location outside of our encrypted HOME
-echo "Moving u2f_keys file to a safer location"
-sudo mkdir /etc/Yubico
-sudo cp /home/${sudo_user_username}/.config/Yubico/u2f_keys /etc/Yubico/u2f_keys
+echo "Moving u2f_keys file to /etc/Yubico"
+sudo cp /home/${sudo_user}/.config/Yubico/u2f_keys /etc/Yubico/u2f_keys
 sudo chmod 644 /etc/Yubico/u2f_keys
 echo ""
+
+# check gdm-password exists
+[ -f /etc/pam.d/gdm-password ] || {
+    echo "/etc/pam.d/gdm-password file not found; aborting"
+    exit 1
+}
 
 # backup gdm-password before modification
 echo "Backing up the system's PAM file"
