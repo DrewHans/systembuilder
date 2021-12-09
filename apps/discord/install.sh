@@ -3,7 +3,7 @@
 # if flatpak is on system
 command -v flatpak >/dev/null 2>&1 && {
     # install through flatpak
-    sudo -u ${SUDO_USER:-$USER} flatpak install flathub org.discordapp.Discord --assumeyes
+    sudo -u ${SUDO_USER:-$USER} flatpak install flathub com.discordapp.Discord --assumeyes
 }
 
 # if flatpak is not found

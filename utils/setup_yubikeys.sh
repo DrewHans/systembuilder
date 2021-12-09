@@ -76,13 +76,16 @@ echo "Backing up the system's PAM file"
 sudo cp /etc/pam.d/gdm-password /etc/pam.d/gdm-password.backup
 echo ""
 
-# require a Yubikey for login
-echo "Updating up the system's PAM file"
-insertstr="auth	required	pam_u2f.so	authfile=/etc/Yubico/u2f_keys"
-sudo sed -i "/^@include common-auth/a $insertstr" /etc/pam.d/gdm-password
-echo ""
+# if Yubikey is not already required for login
+if ! grep -qF "authfile=/etc/Yubico/u2f_keys" /etc/pam.d/gdm-password; then
+    # require a Yubikey for login
+    echo "Updating up the system's PAM file"
+    insertstr="auth	required	pam_u2f.so	authfile=/etc/Yubico/u2f_keys"
+    sudo sed -i "/^@include common-auth/a $insertstr" /etc/pam.d/gdm-password
+    echo ""
+fi
 
-echo "Finished; you will now need a Yubikey to login"
+echo "You will now need a Yubikey to login"
 echo "Double check /etc/pam.d/gdm-password before logging out"
 echo ""
 

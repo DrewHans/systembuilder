@@ -2,11 +2,11 @@
 
 # set temporary script variables
 sudo_user_username=${SUDO_USER:-$USER} # user who ran this installer with sudo
-gitserver="https://github.com/DrewHans"
+git_user_name="DrewHans"
 dotfiles_repo_name="dotfiles"
 scripts_repo_name="shellscripts"
-dotfiles_repo_url="${gitserver}/${dotfiles_repo_name}"
-scripts_repo_url="${gitserver}/${scripts_repo_name}"
+dotfiles_repo_url="git@github.com:${git_user_name}/${dotfiles_repo_name}.git"
+scripts_repo_url="git@github.com:${git_user_name}/${scripts_repo_name}.git"
 cwd=$(pwd)
 
 # exit if not running as root
@@ -97,13 +97,10 @@ echo "Running apt autoremove"
 sudo apt autoremove --yes
 echo ""
 
-# create Code dir (as user) if it does not exist
-[ -d /home/${sudo_user_username}/Code ] || {
-    echo "Making Code directory for ${sudo_user_username} as ${sudo_user_username}"
-    sudo -u ${sudo_user_username} \
-        mkdir /home/${sudo_user_username}/Code
-    echo ""
-}
+# setup Code dir
+mkdir -p /home/${sudo_user_username}/Code
+chown ${sudo_user_username}:${sudo_user_username} /home/${sudo_user_username}/Code
+chmod 755 /home/${sudo_user_username}/Code
 
 # check if git is installed
 command -v git >/dev/null 2>&1 && {
@@ -112,30 +109,22 @@ command -v git >/dev/null 2>&1 && {
 
     # install dotfiles (as user)
     echo "Cloning ${dotfiles_repo_name} as ${sudo_user_username}"
-    sudo -u ${sudo_user_username} \
-        git clone ${dotfiles_repo_url}
-
+    sudo -u ${sudo_user_username} git clone ${dotfiles_repo_url}
     cd ./${dotfiles_repo_name}
     dos2unix ./installer.sh
-
     echo "Running ${dotfiles_repo_name} installer.sh as ${sudo_user_username}"
-    sudo -u ${sudo_user_username} \
-        bash ./installer.sh
+    sudo -u ${sudo_user_username} bash ./installer.sh
     echo ""
 
     cd /home/${sudo_user_username}/Code
 
     # install shellscripts (as user)
     echo "Cloning ${scripts_repo_name} as ${sudo_user_username}"
-    sudo -u ${sudo_user_username} \
-        git clone ${scripts_repo_url}
-
+    sudo -u ${sudo_user_username} git clone ${scripts_repo_url}
     cd ./${scripts_repo_name}
     dos2unix ./installer.sh
-
     echo "Running ${scripts_repo_name} installer.sh as ${sudo_user_username}"
-    sudo -u ${sudo_user_username} \
-        bash ./installer.sh
+    sudo -u ${sudo_user_username} bash ./installer.sh
     echo ""
 
     # return to original working directory

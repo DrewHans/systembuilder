@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
-sudo -u ${SUDO_USER:-$USER} \
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-
-chmod u+x nvim.appimage
-
-mkdir -p /home/${SUDO_USER:-$USER}/.local/bin/
-
-mv nvim.appimage /home/${SUDO_USER:-$USER}/.local/bin/nvim
-
+# if nvim is not already installed
+command -v nvim >/dev/null 2>&1 || {
+    sudo curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    sudo chmod u+x nvim.appimage
+    sudo mv nvim.appimage /usr/bin/nvim
+}
