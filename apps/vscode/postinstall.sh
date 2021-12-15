@@ -4,17 +4,13 @@
 command -v code >/dev/null 2>&1 && {
     echo "installing vscode extensions"
 
-    sudo -u ${SUDO_USER:-$USER} \
-        code --install-extension material-icon-theme
+    code --install-extension material-icon-theme
 
-    sudo -u ${SUDO_USER:-$USER} \
-        code --install-extension ms-vscode.cpptools
+    code --install-extension ms-vscode.cpptools
 
-    sudo -u ${SUDO_USER:-$USER} \
-        code --install-extension ms-python.python
+    code --install-extension ms-python.python
 
-    sudo -u ${SUDO_USER:-$USER} \
-        code --install-extension ms-python.vscode-pylance
+    code --install-extension ms-python.vscode-pylance
 
     echo ""
 }
