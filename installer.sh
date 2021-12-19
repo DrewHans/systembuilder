@@ -152,6 +152,14 @@ systemctl disable \
     apt-daily-upgrade.timer \
     apt-daily-upgrade.service
 
+# set the system's DNS to Cloudflare's 1.1.1.1 ipv4 & ipv6 addresses
+for f in /etc/NetworkManager/system-connections; do
+    echo "Setting DNS addresses"
+    sudo sed -i '/^\[ipv4\]$/,/^\[/ s/^dns=.*$/dns=1.1.1.1;1.0.0.1;/m' "$f"
+    sudo sed -i '/^\[ipv6\]$/,/^\[/ s/^dns=.*$/dns=2606:4700:4700::1111;2606:4700:4700::1001;/m' "$f"
+    echo ""
+done
+
 echo "systembuilder complete"
 
 exit
