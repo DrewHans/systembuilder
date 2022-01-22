@@ -39,7 +39,6 @@ sudo apt install \
     libpci-dev \
     libusb-dev \
     zlib1g-dev \
-    libusb-1.0 \
     gnat-4.9
 
 echo "Downloading the coreboot git repo"
