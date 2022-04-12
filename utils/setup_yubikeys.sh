@@ -27,7 +27,9 @@ function associate_yubikey() {
     echo ""
 }
 
+
 echo "Starting $0"
+
 
 # create Yubico dir (as user) if it does not exist
 [ -d /home/${sudo_user}/.config/Yubico ] || {
@@ -36,6 +38,7 @@ echo "Starting $0"
         mkdir -p /home/${sudo_user}/.config/Yubico
     echo ""
 }
+
 
 echo "Making u2f_keys file to store yubikey association data"
 sudo -u ${sudo_user} \
@@ -52,6 +55,7 @@ associate_yubikey
 echo "Yubikey association complete"
 echo ""
 
+
 # create /etc/Yubico dir if it does not exist
 [ -d /etc/Yubico ] || {
     echo "Making /etc/Yubico directory to store u2f_keys file"
@@ -59,11 +63,13 @@ echo ""
     echo ""
 }
 
+
 # copy u2f_keys file to a location outside of our encrypted HOME
 echo "Moving u2f_keys file to /etc/Yubico"
 sudo cp /home/${sudo_user}/.config/Yubico/u2f_keys /etc/Yubico/u2f_keys
 sudo chmod 644 /etc/Yubico/u2f_keys
 echo ""
+
 
 # check gdm-password exists
 [ -f /etc/pam.d/gdm-password ] || {
@@ -71,28 +77,41 @@ echo ""
     exit 1
 }
 
-# backup gdm-password before modification
-echo "Backing up the system's PAM file"
+# backup pam.d/gdm-password before modification
+echo "Backing up the system's pam.d/gdm-password file"
 sudo cp /etc/pam.d/gdm-password /etc/pam.d/gdm-password.backup
 echo ""
 
-# if Yubikey is not already required for login
+# if Yubikey is not already required for gdm login
 if ! grep -qF "authfile=/etc/Yubico/u2f_keys" /etc/pam.d/gdm-password; then
-    # require a Yubikey for login
-    echo "Updating up the system's PAM file"
+    # require a Yubikey for gdm login
+    echo "Updating up the system's pam.d/gdm-password file"
     insertstr="auth	required	pam_u2f.so	authfile=/etc/Yubico/u2f_keys"
     sudo sed -i "/^@include common-auth/a $insertstr" /etc/pam.d/gdm-password
     echo ""
 fi
 
-echo "You will now need a Yubikey to login"
-echo "Double check /etc/pam.d/gdm-password before logging out"
+
+# check pam.d/login exists
+[ -f /etc/pam.d/login ] || {
+    echo "/etc/pam.d/login file not found; aborting"
+    exit 1
+}
+
+# backup pam.d/login before modification
+echo "Backing up the system's pam.d/login file"
+sudo cp /etc/pam.d/login /etc/pam.d/login.backup
 echo ""
 
-# TODO: test this in a VM before enabling
-# update /etc/pam.d/login
-# requires a Yubikey for TTY terminal (stop an attacker from bypassing Yubikey)
-# echo "Updating up the system's TTY terminal PAM file"
-# insertstr="auth	required	pam_u2f.so	authfile=/etc/Yubico/u2f_keys"
-# sed "/^@include common-auth.*/i after=$insertstr" /etc/pam.d/login
-# echo ""
+# if Yubikey is not already required for tty login
+if ! grep -qF "authfile=/etc/Yubico/u2f_keys" /etc/pam.d/login; then
+    # require a Yubikey for tty login
+    echo "Updating up the system's pam.d/login file"
+    insertstr="auth	required	pam_u2f.so	authfile=/etc/Yubico/u2f_keys"
+    sudo sed -i "/^@include common-auth/a $insertstr" /etc/pam.d/login
+    echo ""
+fi
+
+
+echo "You will now need a Yubikey to login to gdm and tty"
+echo ""
