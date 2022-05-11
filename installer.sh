@@ -67,7 +67,7 @@ echo ""
 echo "Running preinstall scripts"
 for f in ./apps/*/preinstall.sh; do
     echo "Running ${f}"
-    sudo bash $f
+    sudo -u ${sudo_user_username} bash $f
     echo ""
 done
 
@@ -78,14 +78,14 @@ echo ""
 echo "Running install scripts"
 for f in ./apps/*/install.sh; do
     echo "Running ${f}"
-    sudo bash $f
+    sudo -u ${sudo_user_username} bash $f
     echo ""
 done
 
 echo "Running postinstall scripts"
 for f in ./apps/*/postinstall.sh; do
     echo "Running ${f}"
-    sudo bash $f
+    sudo -u ${sudo_user_username} bash $f
     echo ""
 done
 
@@ -139,23 +139,12 @@ command -v git >/dev/null 2>&1 || {
     echo ""
 }
 
-# stop computer from automatically fetching updates on login
-systemctl stop \
-    apt-daily.timer \
-    apt-daily.service \
-    apt-daily-upgrade.timer \
-    apt-daily-upgrade.service
-
-systemctl disable \
-    apt-daily.timer \
-    apt-daily.service \
-    apt-daily-upgrade.timer \
-    apt-daily-upgrade.service
-
-# set the system's DNS to Cloudflare's 1.1.1.1 ipv4 & ipv6 addresses
+# set the system's DNS Addresses:
+### Cloudflare's 1.1.1.1 ipv4 & ipv6 addresses
+### QuadNine's 9.9.9.9 ipv4 address
 for f in /etc/NetworkManager/system-connections; do
     echo "Setting DNS addresses"
-    sudo sed -i '/^\[ipv4\]$/,/^\[/ s/^dns=.*$/dns=1.1.1.1;1.0.0.1;/m' "$f"
+    sudo sed -i '/^\[ipv4\]$/,/^\[/ s/^dns=.*$/dns=1.1.1.1;1.0.0.1;9.9.9.9;/m' "$f"
     sudo sed -i '/^\[ipv6\]$/,/^\[/ s/^dns=.*$/dns=2606:4700:4700::1111;2606:4700:4700::1001;/m' "$f"
     echo ""
 done

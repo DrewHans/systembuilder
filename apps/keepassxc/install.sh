@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-sudo apt install keepassxc --yes
+flatpak install flathub org.keepassxc.KeePassXC
