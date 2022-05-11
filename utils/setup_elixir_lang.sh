@@ -6,7 +6,7 @@ echo "Press enter to continue:"
 read tmpvar
 
 
-wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
+curl -O https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
 
 
 if [ ! -f "erlang-solutions_2.0_all.deb" ]; then

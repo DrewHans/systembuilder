@@ -6,7 +6,7 @@ ubuntu_version=$(lsb_release --release --short)
 command -v dotnet >/dev/null 2>&1 || {
     echo "Performing first-time installation setup..."
 
-    wget https://packages.microsoft.com/config/ubuntu/$ubuntu_version/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+    curl -O https://packages.microsoft.com/config/ubuntu/$ubuntu_version/packages-microsoft-prod.deb
 
     if [ ! -f "packages-microsoft-prod.deb" ]; then
         echo "Failed to download packages-microsoft-prod.deb file; aborting"
