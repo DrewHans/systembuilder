@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
+
 # For more information about this process, go to:
 # https://support.yubico.com/hc/en-us/articles/360016649099-Ubuntu-Linux-Login-Guide-U2F
-
-# set temporary script variables
-sudo_user=${SUDO_USER:-$USER} # user who ran this script with sudo
 
 # exit if not running as root
 if [[ $(/usr/bin/id -u) -ne 0 ]]; then
@@ -22,8 +20,8 @@ function associate_yubikey() {
     echo "Hit enter when you are ready to start:"
     read input
     echo "When your device begins flashing, touch the metal contact"
-    sudo -u ${sudo_user} \
-        pamu2fcfg >> /home/${sudo_user}/.config/Yubico/u2f_keys
+    sudo -u ${USER} \
+        pamu2fcfg >> /home/${USER}/.config/Yubico/u2f_keys
     echo ""
 }
 
@@ -32,17 +30,17 @@ echo "Starting $0"
 
 
 # create Yubico dir (as user) if it does not exist
-[ -d /home/${sudo_user}/.config/Yubico ] || {
+[ -d /home/${USER}/.config/Yubico ] || {
     echo "Making Yubico directory to store u2f_keys"
-    sudo -u ${sudo_user} \
-        mkdir -p /home/${sudo_user}/.config/Yubico
+    sudo -u ${USER} \
+        mkdir -p /home/${USER}/.config/Yubico
     echo ""
 }
 
 
 echo "Making u2f_keys file to store yubikey association data"
-sudo -u ${sudo_user} \
-    touch /home/${sudo_user}/.config/Yubico/u2f_keys
+sudo -u ${USER} \
+    touch /home/${USER}/.config/Yubico/u2f_keys
 echo ""
 
 # make our Yubikeys work with U2F PAM module
@@ -66,7 +64,7 @@ echo ""
 
 # copy u2f_keys file to a location outside of our encrypted HOME
 echo "Moving u2f_keys file to /etc/Yubico"
-sudo cp /home/${sudo_user}/.config/Yubico/u2f_keys /etc/Yubico/u2f_keys
+sudo cp /home/${USER}/.config/Yubico/u2f_keys /etc/Yubico/u2f_keys
 sudo chmod 644 /etc/Yubico/u2f_keys
 echo ""
 

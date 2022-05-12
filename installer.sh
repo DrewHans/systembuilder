@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # set temporary script variables
-sudo_user_username=${SUDO_USER:-$USER} # user who ran this installer with sudo
 git_user_name="DrewHans"
 dotfiles_repo_name="dotfiles"
 scripts_repo_name="shellscripts"
@@ -18,113 +17,138 @@ fi
 # check prerequisite programs installed
 command -v dos2unix >/dev/null 2>&1 || {
     echo "Installing prerequisite program: dos2unix"
-    sudo apt install dos2unix --yes
+    apt install dos2unix --yes
     echo ""
 }
 
 command -v curl >/dev/null 2>&1 || {
     echo "Installing prerequisite program: curl"
-    sudo apt install curl --yes
+    apt install curl --yes
     echo ""
 }
 
 command -v wget >/dev/null 2>&1 || {
     echo "Installing prerequisite program: wget"
-    sudo apt install wget --yes
+    apt install wget --yes
     echo ""
 }
 
 # check python is in path
 command -v python >/dev/null 2>&1 || {
     echo "Symlinking python3 to python"
-    sudo ln -s /usr/bin/python3 /usr/bin/python
+    ln -s /usr/bin/python3 /usr/bin/python
     echo ""
 }
 
 # check pip is in path
 command -v pip >/dev/null 2>&1 || {
     echo "Symlinking pip3 to pip"
-    sudo ln -s /usr/bin/pip3 /usr/bin/pip
+    ln -s /usr/bin/pip3 /usr/bin/pip
     echo ""
 }
 
-echo "Running dos2unix on all scripts"
+echo "Running dos2unix on all scripts in apps directory"
 find ./apps -name '*.sh' -type f -print0 | xargs -0 dos2unix --
 echo ""
 
-echo "Running apt update"
-sudo apt update
-echo ""
-
-echo "Adding flathub repo to flatpak"
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-echo ""
-
-echo "Updating flatpak"
-sudo -u ${sudo_user_username} flatpak update --assumeyes
-echo ""
+###############################################################################
+########## Root Apps
+echo "Setting up root apps (sudo required)"
 
 echo "Running preinstall scripts"
-for f in ./apps/*/preinstall.sh; do
+for f in ./apps/root/*/preinstall.sh; do
     echo "Running ${f}"
-    sudo -u ${sudo_user_username} bash $f
+    sudo bash $f
     echo ""
 done
 
 echo "Running apt update"
-sudo apt update
+apt update
 echo ""
 
 echo "Running install scripts"
-for f in ./apps/*/install.sh; do
+for f in ./apps/root/*/install.sh; do
     echo "Running ${f}"
-    sudo -u ${sudo_user_username} bash $f
+    sudo bash $f
     echo ""
 done
 
 echo "Running postinstall scripts"
-for f in ./apps/*/postinstall.sh; do
+for f in ./apps/root/*/postinstall.sh; do
     echo "Running ${f}"
-    sudo -u ${sudo_user_username} bash $f
+    sudo bash $f
     echo ""
 done
 
 echo "Running apt clean"
-sudo apt clean --yes
+apt clean --yes
 echo ""
 
 echo "Running apt autoremove"
-sudo apt autoremove --yes
+apt autoremove --yes
 echo ""
 
+
+###############################################################################
+########## User Apps
+echo "Setting up user apps for ${SUDO_USER}"
+
+sudo -u ${SUDO_USER} flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+echo "Updating flatpak"
+sudo -u ${SUDO_USER} flatpak update --assumeyes
+echo ""
+
+echo "Running preinstall scripts"
+for f in ./apps/user/*/preinstall.sh; do
+    echo "Running ${f}"
+    sudo -u ${SUDO_USER} bash $f
+    echo ""
+done
+
+echo "Running install scripts"
+for f in ./apps/user/*/install.sh; do
+    echo "Running ${f}"
+    sudo -u ${SUDO_USER} bash $f
+    echo ""
+done
+
+echo "Running postinstall scripts"
+for f in ./apps/user/*/postinstall.sh; do
+    echo "Running ${f}"
+    sudo -u ${SUDO_USER} bash $f
+    echo ""
+done
+
+###############################################################################
+
 # setup Code dir
-mkdir -p /home/${sudo_user_username}/Code
-chown ${sudo_user_username}:${sudo_user_username} /home/${sudo_user_username}/Code
-chmod 755 /home/${sudo_user_username}/Code
+sudo -u ${SUDO_USER} mkdir -p /home/${SUDO_USER}/Code
+chmod 755 /home/${SUDO_USER}/Code
 
 # check if git is installed
 command -v git >/dev/null 2>&1 && {
 
-    cd /home/${sudo_user_username}/Code
+    cd /home/${SUDO_USER}/Code
 
     # install dotfiles (as user)
-    echo "Cloning ${dotfiles_repo_name} as ${sudo_user_username}"
-    sudo -u ${sudo_user_username} git clone ${dotfiles_repo_url}
+    echo "Cloning ${dotfiles_repo_name}"
+    sudo -u ${SUDO_USER} git clone ${dotfiles_repo_url}
     cd ./${dotfiles_repo_name}
     dos2unix ./installer.sh
-    echo "Running ${dotfiles_repo_name} installer.sh as ${sudo_user_username}"
-    sudo -u ${sudo_user_username} bash ./installer.sh
+    echo "Running ${dotfiles_repo_name} installer.sh"
+    sudo -u ${SUDO_USER} bash ./installer.sh
     echo ""
 
-    cd /home/${sudo_user_username}/Code
+    cd /home/${SUDO_USER}/Code
 
-    # install shellscripts (as user)
-    echo "Cloning ${scripts_repo_name} as ${sudo_user_username}"
-    sudo -u ${sudo_user_username} git clone ${scripts_repo_url}
+    # install shellscripts (as SUDO_USER)
+    echo "Cloning ${scripts_repo_name}"
+    sudo -u ${SUDO_USER} git clone ${scripts_repo_url}
     cd ./${scripts_repo_name}
     dos2unix ./installer.sh
-    echo "Running ${scripts_repo_name} installer.sh as ${sudo_user_username}"
-    sudo -u ${sudo_user_username} bash ./installer.sh
+    echo "Running ${scripts_repo_name} installer.sh"
+    sudo -u ${SUDO_USER} bash ./installer.sh
     echo ""
 
     # return to original working directory

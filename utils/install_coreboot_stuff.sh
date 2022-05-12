@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo_user_username=${SUDO_USER:-$USER} # user who ran this script with sudo
+
 cwd=$(pwd)
 
 # exit if not running as root
@@ -15,7 +15,7 @@ command -v git >/dev/null 2>&1 || {
     exit 1
 }
 
-cd /home/${sudo_user_username}/Code
+cd /home/${USER}/Code
 
 sudo apt update
 
