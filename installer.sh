@@ -4,8 +4,8 @@
 git_user_name="DrewHans"
 dotfiles_repo_name="dotfiles"
 scripts_repo_name="shellscripts"
-dotfiles_repo_url="git@github.com:${git_user_name}/${dotfiles_repo_name}.git"
-scripts_repo_url="git@github.com:${git_user_name}/${scripts_repo_name}.git"
+dotfiles_repo_url="https://github.com/${git_user_name}/${dotfiles_repo_name}.git"
+scripts_repo_url="https://github.com/${git_user_name}/${scripts_repo_name}.git"
 cwd=$(pwd)
 
 # exit if not running as root
