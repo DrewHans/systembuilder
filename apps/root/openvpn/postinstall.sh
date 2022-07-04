@@ -17,7 +17,11 @@ echo "REPLACE_WITH_VPN_SERVICE_PASSWORD" >> /etc/openvpn/nordvpn_auth.txt
 # note: the service username & password are different from the account login
 
 # now you can start openvpn by running a command like:
-# sudo openvpn --config /etc/openvpn/ovpn_udp/us9632.nordvpn.com.udp.ovpn --auth-user-pass /etc/openvpn/nordvpn_auth.txt --auth-nocache
+# sudo openvpn \
+# --config /etc/openvpn/ovpn_udp/us9632.nordvpn.com.udp.ovpn \
+# --auth-user-pass /etc/openvpn/nordvpn_auth.txt \
+# --log /etc/openvpn/log.txt \
+# --daemon
 
 
 
