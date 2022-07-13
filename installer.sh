@@ -129,8 +129,6 @@ chmod 755 /home/${SUDO_USER}/Code
 # check if git is installed
 command -v git >/dev/null 2>&1 && {
 
-    cd /home/${SUDO_USER}/Code
-
     # install dotfiles (as user)
     echo "Cloning ${dotfiles_repo_name}"
     sudo -u ${SUDO_USER} git clone ${dotfiles_repo_url}
@@ -139,8 +137,6 @@ command -v git >/dev/null 2>&1 && {
     echo "Running ${dotfiles_repo_name} installer.sh"
     sudo -u ${SUDO_USER} bash ./installer.sh
     echo ""
-
-    cd /home/${SUDO_USER}/Code
 
     # install shellscripts (as SUDO_USER)
     echo "Cloning ${scripts_repo_name}"
