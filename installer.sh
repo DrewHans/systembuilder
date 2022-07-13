@@ -138,6 +138,9 @@ command -v git >/dev/null 2>&1 && {
     sudo -u ${SUDO_USER} bash ./installer.sh
     echo ""
 
+    # return to original working directory
+    cd $cwd
+
     # install shellscripts (as SUDO_USER)
     echo "Cloning ${scripts_repo_name}"
     sudo -u ${SUDO_USER} git clone ${scripts_repo_url}
