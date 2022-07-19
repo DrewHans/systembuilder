@@ -3,7 +3,7 @@
 
 # Optional step: enable deadsnakes ppa
 # get access to newer Python releases not available in default package manager
-# sudo add-apt-repository ppa:deadsnakes/ppa
+# sudo add-apt-repository ppa:deadsnakes/ppa --yes --no-update
 
 sudo apt update
 

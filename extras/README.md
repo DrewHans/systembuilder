@@ -1,4 +1,4 @@
-# utils
+# extras
 
 A place to store scripts that cannot be run while AFK.
 

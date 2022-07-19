@@ -1,5 +1,9 @@
 # systembuilder
+
 Automates installing my apps, dotfiles, and shellscripts on new Linux systems.
+Maybe one day I'll decide to switch over to Ansible instead... but not today.
+
+---
 
 Before running installer.sh, go into the apps directory and delete the ones that you DO NOT want installed.
 
