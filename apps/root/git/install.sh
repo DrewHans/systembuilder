@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-apt install git --yes
+
+apt install git git-lfs --yes
