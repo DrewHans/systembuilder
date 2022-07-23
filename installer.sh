@@ -12,8 +12,8 @@ fi
 # install dependencies
 sudo bash ./scripts/install-deps.sh
 
-# install links
-sudo bash ./scripts/set-links.sh
+# create links
+sudo bash ./scripts/create-links.sh
 
 # set dns addresses
 sudo bash ./scripts/set-dns-addresses.sh
@@ -40,6 +40,6 @@ sudo -u ${SUDO_USER} bash ./scripts/install-dotfiles.sh
 sudo -u ${SUDO_USER} bash ./scripts/install-shellscripts.sh
 
 # install user directories
-sudo -u ${SUDO_USER} bash ./scripts/set-directories.sh
+sudo -u ${SUDO_USER} bash ./scripts/create-directories.sh
 
 echo "systembuilder complete"
