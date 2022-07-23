@@ -13,7 +13,7 @@ fi
 sudo bash ./scripts/install-deps.sh
 
 # install links
-sudo bash ./scripts/install-links.sh
+sudo bash ./scripts/set-links.sh
 
 # set dns addresses
 sudo bash ./scripts/set-dns-addresses.sh
@@ -30,14 +30,16 @@ sudo -v
 # install user apps
 sudo -u ${SUDO_USER} bash ./scripts/install-user-apps.sh
 
+# extend sudo timeout
+sudo -v
+
 # install configuration files
 sudo -u ${SUDO_USER} bash ./scripts/install-dotfiles.sh
 
 # install scripts
 sudo -u ${SUDO_USER} bash ./scripts/install-shellscripts.sh
 
-# create Code dir for storing projects
-sudo -u ${SUDO_USER} mkdir -p /home/${SUDO_USER}/Code
-chmod 755 /home/${SUDO_USER}/Code
+# install user directories
+sudo -u ${SUDO_USER} bash ./scripts/set-directories.sh
 
 echo "systembuilder complete"
