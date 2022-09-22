@@ -44,4 +44,7 @@ echo "Running apt autoremove"
 apt autoremove --yes
 echo ""
 
+echo "Adding flathub to flatpak if it doesn't already exist"
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
 echo "$0 has finished"

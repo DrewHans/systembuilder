@@ -11,8 +11,6 @@ fi
 
 echo "Setting up user apps"
 
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
 echo "Updating flatpak"
 flatpak update --assumeyes
 echo ""

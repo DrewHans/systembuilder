@@ -5,7 +5,6 @@
 command -v code >/dev/null 2>&1 && {
     echo "Installing Visual Studio Code extensions"
 
-    code --install-extension material-icon-theme
     code --install-extension ms-azuretools.vscode-docker
     code --install-extension ms-dotnettools.csharp
     code --install-extension ms-python.python
