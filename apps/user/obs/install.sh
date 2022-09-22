@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
 
-flatpak install --user flathub com.obsproject.Studio --assumeyes
+# don't install flatpak version, it has major problems with device detection
+# flatpak install --user flathub com.obsproject.Studio --assumeyes

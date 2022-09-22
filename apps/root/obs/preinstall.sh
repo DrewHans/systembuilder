@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
 
-# install v4l2loopback-dkms to enable virtual camera support in obs
-apt install v4l2loopback-dkms --yes
+add-apt-repository ppa:obsproject/obs-studio --yes --no-update

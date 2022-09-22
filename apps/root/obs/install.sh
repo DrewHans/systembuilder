@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
 
-# do nothing as root, obs gets installed via flatpak
+# install via apt because flatpak version has major problems with device detection
+apt install ffmpeg obs-studio v4l2loopback-dkms --yes
