@@ -77,11 +77,11 @@ gsettings set org.gnome.shell.extensions.pop-cosmic workspace-picker-left true
 # configure keyboard shortcuts
 gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>Escape', '<Super>l']"  # lock pc
 gsettings set org.gnome.settings-daemon.plugins.media-keys logout "['<Control><Alt>Delete']"  # logout
-gsettings set org.gnome.settings-daemon.plugins.media-keys terminal ['<Super>t']  # launch terminal
-gsettings set org.gnome.settings-daemon.plugins.media-keys www ['<Super>b']  # launch web browser
-gsettings set org.gnome.shell.keybindings screenshot ['<Shift>Print']
-gsettings set org.gnome.shell.keybindings screenshot-window ['<Alt>Print']
-gsettings set org.gnome.shell.keybindings show-screenshot-ui ['Print']
+gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"  # launch terminal
+gsettings set org.gnome.settings-daemon.plugins.media-keys www "['<Super>b']"  # launch web browser
+gsettings set org.gnome.shell.keybindings screenshot "['<Shift>Print']"
+gsettings set org.gnome.shell.keybindings screenshot-window "['<Alt>Print']"
+gsettings set org.gnome.shell.keybindings show-screenshot-ui "['Print']"
 
 # configure overrides
 gsettings set org.gnome.shell.overrides attach-modal-dialogs false
