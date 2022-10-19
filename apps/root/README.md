@@ -1,4 +1,3 @@
 # Root Apps
 
-This apps require `sudo` to be installed.
-
+These apps require root permission to be installed.

@@ -1,4 +1,3 @@
 # User Apps
 
-This apps do not require `sudo` to be installed.
-
+These apps do not require root permission to be installed.
