@@ -1,5 +1,3 @@
 # extras
 
-A place to store scripts that cannot be run while AFK.
-
-Most of these require you to be present to supply user input.
+A place to store scripts that should not be run while AFK.
