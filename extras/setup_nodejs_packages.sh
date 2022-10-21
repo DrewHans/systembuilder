@@ -16,6 +16,9 @@
 # It allows you to use standard web technologies - HTML5, CSS3, and JavaScript for cross-platform development.
 npm install -g cordova
 
+# Framework7 is a free and open source framework to develop mobile, desktop or web apps with native look and feel.
+npm install -g framework7-cli
+
 # Express is a fast, unopinionated, minimalist web framework for Node.js.
 npm install -g express
 
