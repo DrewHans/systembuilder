@@ -4,43 +4,53 @@
 # For more information about this process, go to:
 # https://support.yubico.com/hc/en-us/articles/360016649099-Ubuntu-Linux-Login-Guide-U2F
 
-# exit if not running as root
-if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-    echo "Error: You must run this script as root"
-    exit 1
-fi
-
-# check prerequisite programs installed
-command -v pamu2fcfg >/dev/null 2>&1 || {
-    echo "Missing pamu2fcfg; aborting"
-    exit 1
-}
-
 function associate_yubikey() {
-    echo "Hit enter when you are ready to start:"
-    read input
-    echo "When your device begins flashing, touch the metal contact"
-    sudo -u ${USER} \
-        pamu2fcfg >> /home/${USER}/.config/Yubico/u2f_keys
-    echo ""
+	echo "Hit enter when you are ready to start:"
+	read input
+	echo "When your device begins flashing, touch the metal contact"
+	sudo -u ${USER} pamu2fcfg >> /home/${USER}/.config/Yubico/u2f_keys
+	echo ""
 }
 
+function check_dependency {
+	if ! command -v "$1" > /dev/null 2>&1
+	then
+		echo "This script requires $1 to be installed."
+		echo "Please use your distribution's package manager to install it."
+		exit 2
+	fi
+}
+
+function check_is_root {
+	if [[ $EUID -ne 0 ]]
+	then
+		echo "This script must be run as root."
+		exit 1
+	fi
+}
+
+# safety checks
+check_is_root
 
 echo "Starting $0"
 
+if ! command -v "pamu2fcfg" > /dev/null 2>&1
+then
+	echo "Warning: pamu2fcfg not found!"
+	echo "Installing libpam-yubico and libpan-u2f..."
+	apt install libpam-yubico libpam-u2f --yes
+	echo ""
+fi
 
 # create Yubico dir (as user) if it does not exist
 [ -d /home/${USER}/.config/Yubico ] || {
-    echo "Making Yubico directory to store u2f_keys"
-    sudo -u ${USER} \
-        mkdir -p /home/${USER}/.config/Yubico
-    echo ""
+	echo "Making Yubico directory to store u2f_keys"
+	sudo -u ${USER} mkdir -p /home/${USER}/.config/Yubico
+	echo ""
 }
 
-
 echo "Making u2f_keys file to store yubikey association data"
-sudo -u ${USER} \
-    touch /home/${USER}/.config/Yubico/u2f_keys
+sudo -u ${USER} touch /home/${USER}/.config/Yubico/u2f_keys
 echo ""
 
 # make our Yubikeys work with U2F PAM module
@@ -53,14 +63,12 @@ associate_yubikey
 echo "Yubikey association complete"
 echo ""
 
-
 # create /etc/Yubico dir if it does not exist
 [ -d /etc/Yubico ] || {
-    echo "Making /etc/Yubico directory to store u2f_keys file"
-    mkdir -p /etc/Yubico
-    echo ""
+	echo "Making /etc/Yubico directory to store u2f_keys file"
+	mkdir -p /etc/Yubico
+	echo ""
 }
-
 
 # copy u2f_keys file to a location outside of our encrypted HOME
 echo "Moving u2f_keys file to /etc/Yubico"
@@ -68,11 +76,10 @@ sudo cp /home/${USER}/.config/Yubico/u2f_keys /etc/Yubico/u2f_keys
 sudo chmod 644 /etc/Yubico/u2f_keys
 echo ""
 
-
 # check gdm-password exists
 [ -f /etc/pam.d/gdm-password ] || {
-    echo "/etc/pam.d/gdm-password file not found; aborting"
-    exit 1
+	echo "/etc/pam.d/gdm-password file not found; aborting"
+	exit 1
 }
 
 # backup pam.d/gdm-password before modification
@@ -82,18 +89,17 @@ echo ""
 
 # if Yubikey is not already required for gdm login
 if ! grep -qF "authfile=/etc/Yubico/u2f_keys" /etc/pam.d/gdm-password; then
-    # require a Yubikey for gdm login
-    echo "Updating up the system's pam.d/gdm-password file"
-    insertstr="auth	required	pam_u2f.so	authfile=/etc/Yubico/u2f_keys"
-    sudo sed -i "/^@include common-auth/a $insertstr" /etc/pam.d/gdm-password
-    echo ""
+	# require a Yubikey for gdm login
+	echo "Updating up the system's pam.d/gdm-password file"
+	insertstr="auth	required	pam_u2f.so	authfile=/etc/Yubico/u2f_keys"
+	sudo sed -i "/^@include common-auth/a $insertstr" /etc/pam.d/gdm-password
+	echo ""
 fi
-
 
 # check pam.d/login exists
 [ -f /etc/pam.d/login ] || {
-    echo "/etc/pam.d/login file not found; aborting"
-    exit 1
+	echo "/etc/pam.d/login file not found; aborting"
+	exit 1
 }
 
 # backup pam.d/login before modification
@@ -103,13 +109,12 @@ echo ""
 
 # if Yubikey is not already required for tty login
 if ! grep -qF "authfile=/etc/Yubico/u2f_keys" /etc/pam.d/login; then
-    # require a Yubikey for tty login
-    echo "Updating up the system's pam.d/login file"
-    insertstr="auth	required	pam_u2f.so	authfile=/etc/Yubico/u2f_keys"
-    sudo sed -i "/^@include common-auth/a $insertstr" /etc/pam.d/login
-    echo ""
+	# require a Yubikey for tty login
+	echo "Updating up the system's pam.d/login file"
+	insertstr="auth	required	pam_u2f.so	authfile=/etc/Yubico/u2f_keys"
+	sudo sed -i "/^@include common-auth/a $insertstr" /etc/pam.d/login
+	echo ""
 fi
-
 
 echo "You will now need a Yubikey to login to gdm and tty"
 echo ""
