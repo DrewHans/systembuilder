@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
 
-echo "Starting $0"
+function check_is_root {
+	if [[ $EUID -ne 0 ]]
+	then
+		echo "This script must be run as root."
+		exit 1
+	fi
+}
 
-# exit if not running as root
-if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-    echo "Error: You must run this script as root"
-    exit 1
-fi
+# safety checks
+check_is_root
+
+echo "Starting $0"
 
 # install dependencies
 sudo bash ./scripts/install-deps.sh  | tee -a ~/systembuilder_output.log
@@ -48,4 +53,4 @@ sudo -v
 # set user gsettings
 sudo -u ${SUDO_USER} bash ./scripts/set-gsettings.sh  | tee -a ~/systembuilder_output.log
 
-echo "systembuilder complete"
+echo "$0 finished"
