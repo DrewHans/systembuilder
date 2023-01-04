@@ -10,13 +10,13 @@ curl -O https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
 
 
 if [ ! -f "erlang-solutions_2.0_all.deb" ]; then
-    echo "Failed to download erlang-solutions_2.0_all.deb file; aborting"
-    exit 1
+	echo "Failed to download erlang-solutions_2.0_all.deb file; aborting"
+	exit 1
 fi
 
 sudo dpkg -i erlang-solutions_2.0_all.deb || {
-    echo "Failed to install erlang-solutions_2.0_all.deb; aborting"
-    exit 1
+	echo "Failed to install erlang-solutions_2.0_all.deb; aborting"
+	exit 1
 }
 
 sudo apt update

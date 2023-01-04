@@ -5,14 +5,14 @@ cwd=$(pwd)
 
 # exit if not running as root
 if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-    echo "Error: You must run this script as root"
-    exit 1
+	echo "Error: You must run this script as root"
+	exit 1
 fi
 
 # check prerequisite programs installed
 command -v git >/dev/null 2>&1 || {
-    echo "git not found; aborting"
-    exit 1
+	echo "git not found; aborting"
+	exit 1
 }
 
 cd /home/${USER}/Code
@@ -24,22 +24,22 @@ sudo apt install flashrom --yes
 
 echo "Installing build-essential & other build tools"
 sudo apt install \
-    build-essential \
-    libftdi1 \
-    libftdi-dev \
-    libusb-dev \
-    libpci-dev \
-    m4 \
-    bison \
-    flex \
-    libncurses5-dev \
-    libncurses5 \
-    pciutils \
-    usbutils \
-    libpci-dev \
-    libusb-dev \
-    zlib1g-dev \
-    gnat-4.9
+	build-essential \
+	libftdi1 \
+	libftdi-dev \
+	libusb-dev \
+	libpci-dev \
+	m4 \
+	bison \
+	flex \
+	libncurses5-dev \
+	libncurses5 \
+	pciutils \
+	usbutils \
+	libpci-dev \
+	libusb-dev \
+	zlib1g-dev \
+	gnat-4.9
 
 echo "Downloading the coreboot git repo"
 git clone --recurse-submodules https://review.coreboot.org/coreboot.git ~/coreboot

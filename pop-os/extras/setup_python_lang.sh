@@ -11,15 +11,15 @@ sudo apt update
 sudo apt install python3 python3-pip
 
 command -v python >/dev/null 2>&1 && {
-    echo "python version installed:"
-    python --version
-    echo ""
+	echo "python version installed:"
+	python --version
+	echo ""
 }
 
 command -v pip3 >/dev/null 2>&1 && {
-    echo "pip3 version installed:"
-    pip3 --version
-    echo ""
+	echo "pip3 version installed:"
+	pip3 --version
+	echo ""
 }
 
 # upgrade pip to newest pip version
