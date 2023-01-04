@@ -33,5 +33,8 @@ install_flatpak "org.freedesktop.Platform.ffmpeg-full"
 install_flatpak "org.gnome.baobab"  # Disk Usage Analyzer
 install_flatpak "org.keepassxc.KeePassXC"
 install_flatpak "org.libretro.RetroArch"
+install_flatpak "org.ppsspp.PPSSPP"  # Sony PSP Emulator
+install_flatpak "net.rpcs3.RPCS3"  # Sony PS3 Emulator
+install_flatpak "org.yuzu_emu.yuzu"  # Nintendo Switch Emulator
 
 echo "$0 finished"
