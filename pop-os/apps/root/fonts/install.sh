@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 
-apt install fonts-roboto fonts-noto --yes
+apt install font-manager fonts-roboto fonts-noto --yes
