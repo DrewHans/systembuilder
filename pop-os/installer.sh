@@ -50,7 +50,7 @@ sudo -u ${SUDO_USER} bash ./scripts/create-directories.sh  | tee -a /home/${SUDO
 # extend sudo timeout
 sudo -v
 
-# set user gsettings
+# set user gsettings (do this after installing dotfiles)
 sudo -u ${SUDO_USER} bash ./scripts/set-gsettings.sh  | tee -a /home/${SUDO_USER}/systembuilder_output.log
 
 echo "$0 finished"

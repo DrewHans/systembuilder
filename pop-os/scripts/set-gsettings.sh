@@ -90,4 +90,21 @@ gsettings set org.gnome.shell.overrides edge-tiling true
 gsettings set org.gnome.shell.overrides focus-change-on-pointer-rest true
 gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 
+# configure fonts
+if [ -f "/home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf" ]; then
+	# font types and font sizes
+	gsettings set org.gnome.desktop.interface font-name 'Atkinson Hyperlegible 12'
+	gsettings set org.gnome.desktop.interface document-font-name 'Atkinson Hyperlegible 11'
+	gsettings set org.gnome.desktop.interface monospace-font-name 'Fira Mono 11'
+
+	# additional font settings
+	gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
+	gsettings set org.gnome.desktop.interface font-hinting 'full'
+	gsettings set org.gnome.desktop.interface font-rgba-order 'rgb'
+fi
+
+if [ ! -f "/home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf" ]; then
+	echo "WARNING: /home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf not found"
+fi
+
 echo "$0 has finished"
