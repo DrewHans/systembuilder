@@ -97,6 +97,9 @@ if [ -f "/home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf" ]; then
 	gsettings set org.gnome.desktop.interface document-font-name 'Atkinson Hyperlegible 11'
 	gsettings set org.gnome.desktop.interface monospace-font-name 'Fira Mono 11'
 
+	# legacy font type and font size
+	gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Atkinson Hyperlegible 12'
+
 	# additional font settings
 	gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
 	gsettings set org.gnome.desktop.interface font-hinting 'full'
