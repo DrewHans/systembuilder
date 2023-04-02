@@ -35,29 +35,21 @@ fi
 if [ ! -f ~/.ssh/id_rsa.pub ]
 then
 	echo "Warning: you don't have a public ssh key (~/.ssh/id_rsa.pub)"
-
 	check_dependency "ssh-keygen"
-
 	echo "You need to generate a new ssh keypair."
-
 	ssh-keygen
-
 	echo ""
 fi
 
 # copy your public ssh key to the router
 echo "Copying ~/.ssh/id_rsa.pub to the router..."
-
 ssh root@192.168.1.1 "tee -a /etc/dropbear/authorized_keys" < ~/.ssh/id_rsa.pub
-
 echo ""
 
-echo "Verify you can SSH into router then harden security with these commands:"
-echo '$ uci set dropbear.@dropbear[0].PasswordAuth="0"'
-echo '$ uci set dropbear.@dropbear[0].RootPasswordAuth="0"'
-echo '$ uci commit dropbear'
-echo '$ /etc/init.d/dropbear restart'
-echo '$ chmod -R u=rwX,go= /etc/dropbear'
+# copy router.sh to router
+router_sh_file_path="$(cd "$(dirname "$0")" && pwd)/router.sh"
+echo "Copying $router_sh_file_path to router..."
+scp ./router.sh root@192.168.1.1:/root
 echo ""
 
 echo "$0 finished"

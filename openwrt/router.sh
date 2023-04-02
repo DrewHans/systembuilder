@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 
 echo "Starting $0"
@@ -10,16 +10,29 @@ then
 	exit 1
 fi
 
+echo "Updating list of available packages..."
+echo ""
+
 opkg update
 
-# install packages
+echo ""
+
+echo "Installing packages for DNS Over HTTPS..."
+echo ""
+
 opkg install https-dns-proxy
 opkg install luci-app-https-dns-proxy
 
-# restart rpc daemon (to make new services show up in LuCI)
+echo ""
+
+echo "Restarting rpc daemon to make new services show up in LuCI..."
+
 /etc/init.d/rpcd restart
 
-# configure https-dns-proxy
+echo ""
+
+echo "Configuring https-dns-proxy..."
+
 uci set https-dns-proxy.config.force_dns='0'
 
 uci set https-dns-proxy.@https-dns-proxy[0]=https-dns-proxy
@@ -40,11 +53,22 @@ uci set https-dns-proxy.@https-dns-proxy[1].bootstrap_dns='1.1.1.1,1.0.0.1,2606:
 
 uci commit https-dns-proxy
 
+echo "Restarting https-dns-proxy service (to load new configuration)..."
 /etc/init.d/https-dns-proxy restart
 
 echo ""
 
-echo "Don't forget to run the computer.sh script on your computers!"
+echo "Hardening security..."
+
+# harden security: disabling dropbear password authentication
+uci set dropbear.@dropbear[0].PasswordAuth="0"
+uci set dropbear.@dropbear[0].RootPasswordAuth="0"
+uci commit dropbear
+/etc/init.d/dropbear restart
+
+# harden security: set correct permissions for dropbear files
+chmod -R u=rwX,go= /etc/dropbear
+
 echo ""
 
 echo "$0 finished"
