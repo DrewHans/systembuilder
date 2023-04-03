@@ -90,9 +90,26 @@ echo ""
 
 echo "Downloading latest F-Droid apk..."
 wget https://f-droid.org/F-Droid.apk --output-document=./fdroid.apk --quiet
+echo ""
+
+echo "Downloading F-Droid PGP signature..."
+wget https://f-droid.org/F-Droid.apk.asc --output-document=./fdroid.apk.asc -q
+echo ""
+
+echo "Searching for F-Droid PGP key..."
+gpg --keyserver keyserver.ubuntu.com --search-key 'F-Droid <admin@f-droid.org>'
+echo ""
+
+echo "Verifying F-Droid apk..."
+gpg --verify F-Droid.apk.asc
+echo ""
+
+echo 'If Good signature from "F-Droid <admin@f-droid.org>", press enter to install:'
+read
+
 echo "Installing F-Droid..."
 adb install ./fdroid.apk
-echo "F-Droid install finished.
+echo "F-Droid install finished."
 echo ""
 
 echo "$0 finished"

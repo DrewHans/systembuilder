@@ -8,8 +8,8 @@ Before running computer.sh on your computer:
 - Run `adb devices` and verify that your device shows up in the "List of devices attached"
 
 After running computer.sh:
-- On your phone, open "Developer options" and toggle off "USB debugging"
+- On your phone, open "Developer options", toggle off "USB debugging", then Revoke all USB debugging permissions
 - Open up apps.md and start installing apps through F-Droid (more secure)
-- Install any Google Play Store apps with Aurora App Store
-- Install any 3rd Party Apps
+- Install all Google Play Store apps with Aurora App Store
+- Install 3rd Party Apps if you feel like it
 - Copy over your data backups and then import the data into each app
