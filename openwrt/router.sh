@@ -33,8 +33,18 @@ echo ""
 
 echo "Configuring https-dns-proxy..."
 
+echo "Backing up default settings..."
+
+uci show > default_router_settings.txt
+
+echo ""
+
+echo "Applying preferred https-dns-proxy settings..."
+
+# prevent DNS highjacking (allow users to use their own DNS, if defined)
 uci set https-dns-proxy.config.force_dns='0'
 
+# set Quad9 as primary DOH provider
 uci set https-dns-proxy.@https-dns-proxy[0]=https-dns-proxy
 uci set https-dns-proxy.@https-dns-proxy[0].listen_addr='127.0.0.1'
 uci set https-dns-proxy.@https-dns-proxy[0].listen_port='5053'
@@ -43,6 +53,7 @@ uci set https-dns-proxy.@https-dns-proxy[0].group='nogroup'
 uci set https-dns-proxy.@https-dns-proxy[0].resolver_url='https://dns.quad9.net/dns-query'
 uci set https-dns-proxy.@https-dns-proxy[0].bootstrap_dns='9.9.9.9,149.112.112.112,2620:fe::fe,2620:fe::9'
 
+# set Cloudflare as secondary DOH provider
 uci set https-dns-proxy.@https-dns-proxy[1]=https-dns-proxy
 uci set https-dns-proxy.@https-dns-proxy[1].listen_addr='127.0.0.1'
 uci set https-dns-proxy.@https-dns-proxy[1].user='nobody'
@@ -50,6 +61,15 @@ uci set https-dns-proxy.@https-dns-proxy[1].group='nogroup'
 uci set https-dns-proxy.@https-dns-proxy[1].resolver_url='https://cloudflare-dns.com/dns-query'
 uci set https-dns-proxy.@https-dns-proxy[1].listen_port='5054'
 uci set https-dns-proxy.@https-dns-proxy[1].bootstrap_dns='1.1.1.1,1.0.0.1,2606:4700:4700::1111,2606:4700:4700::1001'
+
+# set Google as fallback DOH provider
+uci set https-dns-proxy.@https-dns-proxy[2]=https-dns-proxy
+uci set https-dns-proxy.@https-dns-proxy[2].listen_addr='127.0.0.1'
+uci set https-dns-proxy.@https-dns-proxy[2].user='nobody'
+uci set https-dns-proxy.@https-dns-proxy[2].group='nogroup'
+uci set https-dns-proxy.@https-dns-proxy[2].resolver_url='https://dns.google/dns-query'
+uci set https-dns-proxy.@https-dns-proxy[2].listen_port='5055'
+uci set https-dns-proxy.@https-dns-proxy[2].bootstrap_dns='8.8.8.8,8.8.4.4,2001:4860:4860::8888,2001:4860:4860::8844'
 
 uci commit https-dns-proxy
 
