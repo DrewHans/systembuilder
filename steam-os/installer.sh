@@ -28,6 +28,7 @@ check_not_root
 
 echo "Starting $0"
 
+install_flatpak "com.github.tchx84.Flatseal"
 install_flatpak "io.gitlab.librewolf-community"
 install_flatpak "org.freedesktop.Platform.ffmpeg-full"
 install_flatpak "org.gnome.baobab"  # Disk Usage Analyzer
@@ -36,5 +37,7 @@ install_flatpak "org.libretro.RetroArch"
 install_flatpak "org.ppsspp.PPSSPP"  # Sony PSP Emulator
 install_flatpak "net.rpcs3.RPCS3"  # Sony PS3 Emulator
 install_flatpak "org.yuzu_emu.yuzu"  # Nintendo Switch Emulator
+install_flatpak "com.mojang.Minecraft"
+install_flatpak "net.minetest.Minetest"
 
 echo "$0 finished"
