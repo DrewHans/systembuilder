@@ -1,19 +1,31 @@
 #!/usr/bin/env bash
 
 
-cwd=$(pwd)
-
-# exit if not running as root
-if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-	echo "Error: You must run this script as root"
-	exit 1
-fi
-
-# check prerequisite programs installed
-command -v git >/dev/null 2>&1 || {
-	echo "git not found; aborting"
-	exit 1
+function check_dependency {
+	if ! command -v "$1" > /dev/null 2>&1
+	then
+		echo "This script requires $1 to be installed."
+		echo "Please use your distribution's package manager to install it."
+		exit 2
+	fi
 }
+
+function check_is_root {
+	if [[ $EUID -ne 0 ]]
+	then
+		echo "This script must be run as root."
+		exit 1
+	fi
+}
+
+echo "Starting $0"
+
+# safety checks
+check_dependency "apt"
+check_dependency "git"
+check_is_root
+
+cwd=$(pwd)
 
 cd /home/${USER}/Code
 

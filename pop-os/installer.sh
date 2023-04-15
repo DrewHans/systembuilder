@@ -9,10 +9,10 @@ function check_is_root {
 	fi
 }
 
+echo "Starting $0"
+
 # safety checks
 check_is_root
-
-echo "Starting $0"
 
 # install dependencies
 sudo bash ./scripts/install-deps.sh  | tee -a /home/${SUDO_USER}/systembuilder_output.log

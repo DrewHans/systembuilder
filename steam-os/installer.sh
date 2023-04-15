@@ -22,11 +22,11 @@ function install_flatpak {
 	flatpak install --user flathub "$1" --assumeyes
 }
 
+echo "Starting $0"
+
 # safety checks
 check_dependency "flatpak"
 check_not_root
-
-echo "Starting $0"
 
 install_flatpak "com.github.tchx84.Flatseal"
 install_flatpak "io.gitlab.librewolf-community"

@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
 
+function check_is_root {
+	if [[ $EUID -ne 0 ]]
+	then
+		echo "This script must be run as root."
+		exit 1
+	fi
+}
+
 echo "Starting $0"
 
-# exit if not running as root
-if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-	echo "Error: You must run this script as root"
-	exit 1
-fi
+# safety checks
+check_is_root
 
 echo "Setting up root apps (sudo required)"
 
