@@ -23,6 +23,9 @@ sudo bash ./scripts/create-links.sh  | tee -a /home/${SUDO_USER}/systembuilder_o
 # set dns addresses
 sudo bash ./scripts/set-dns-addresses.sh  | tee -a /home/${SUDO_USER}/systembuilder_output.log
 
+# remove telemetry
+sudo bash ./scripts/remove-telemetry.sh  | tee -a /home/${SUDO_USER}/systembuilder_output.log
+
 # extend sudo timeout
 sudo -v
 
