@@ -1,4 +1,4 @@
-# openwrt
+# openwrt systembuilder
 
 After flashing OpenWrt to the router, verify that you can connect to router and then to the internet.
 
