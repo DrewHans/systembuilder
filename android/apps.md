@@ -1,33 +1,39 @@
 # Android Apps
 
-### App Stores
-- [Aurora App Store](https://f-droid.org/en/packages/com.aurora.store)
-- [F-Droid](https://f-droid.org/packages/org.fdroid.fdroid)
-
-
 #### F-Droid Apps
+These apps should be downloaded & installed with [F-Droid](https://f-droid.org/packages/org.fdroid.fdroid):
 - [Aegis Authenticator](https://f-droid.org/en/packages/com.beemdevelopment.aegis)
 - [Amaze](https://f-droid.org/en/packages/com.amaze.filemanager)
 - [AnkiDroid](https://f-droid.org/en/packages/com.ichi2.anki)
+- [AnySoft Keyboard](https://f-droid.org/en/packages/com.menny.android.anysoftkeyboard)
+- [Aurora App Store](https://f-droid.org/en/packages/com.aurora.store)
 - [Briar](https://f-droid.org/en/packages/org.briarproject.briar.android)
 - [Droid-ify](https://f-droid.org/en/packages/com.looker.droidify)
 - [EDS Lite](https://f-droid.org/en/packages/com.sovworks.edslite)
+- [Feeder](https://f-droid.org/en/packages/com.nononsenseapps.feeder)
 - [Forecastie](https://f-droid.org/en/packages/cz.martykan.forecastie)
+- [Gadgetbridge](https://f-droid.org/en/packages/nodomain.freeyourgadget.gadgetbridge)
 - [IVPN](https://f-droid.org/en/packages/net.ivpn.client)
 - [K-9 Mail](https://f-droid.org/en/packages/com.fsck.k9)
 - [KeePassDX](https://f-droid.org/en/packages/com.kunzisoft.keepass.libre)
 - [LibreTorrent](https://f-droid.org/en/packages/org.proninyaroslav.libretorrent)
-- [Mastodon](https://f-droid.org/en/packages/org.joinmastodon.android)
+- [Markor](https://f-droid.org/en/packages/net.gsantner.markor)
 - [mpv](https://f-droid.org/en/packages/is.xyz.mpv)
+- [MuPDF viewer](https://f-droid.org/en/packages/com.artifex.mupdf.viewer.app)
 - [NewPipe](https://f-droid.org/en/packages/org.schabi.newpipe)
 - [OONI Probe](https://f-droid.org/en/packages/org.openobservatory.ooniprobe)
 - [Open Camera](https://f-droid.org/en/packages/net.sourceforge.opencamera)
+- [OpenBoard](https://f-droid.org/en/packages/org.dslul.openboard.inputmethod.latin)
 - [OpenKeychain](https://f-droid.org/en/packages/org.sufficientlysecure.keychain)
 - [openScale](https://f-droid.org/en/packages/com.health.openscale)
+- [OpenTasks](https://f-droid.org/en/packages/org.dmfs.tasks)
+- [Organic Maps](https://f-droid.org/en/packages/app.organicmaps)
 - [Orgzly](https://f-droid.org/en/packages/com.orgzly)
 - [OsmAnd+](https://f-droid.org/en/packages/net.osmand.plus)
+- [Proton Mail](https://apt.izzysoft.de/fdroid/index/apk/ch.protonmail.android)
 - [SchildiChat](https://f-droid.org/en/packages/de.spiritcroc.riotx)
 - [Scrambled Exif](https://f-droid.org/en/packages/com.jarsilio.android.scrambledeggsif)
+- [Signal]()
 - [Simple App Launcher](https://f-droid.org/en/packages/com.simplemobiletools.applauncher)
 - [Simple Calculator](https://f-droid.org/en/packages/com.simplemobiletools.calculator)
 - [Simple Calendar](https://f-droid.org/en/packages/com.simplemobiletools.calendar.pro)
@@ -44,6 +50,7 @@
 - [Simple Thank You](https://f-droid.org/en/packages/com.simplemobiletools.thankyou)
 - [Simple Voice Recorder](https://f-droid.org/en/packages/com.simplemobiletools.voicerecorder)
 - [Tracker Control](https://f-droid.org/packages/net.kollnig.missioncontrol.fdroid)
+- [Tusky](https://f-droid.org/en/packages/com.keylesspalace.tusky)
 - [Unit Converter Ultimate](https://f-droid.org/en/packages/com.physphil.android.unitconverterultimate)
 - [VLC](https://f-droid.org/en/packages/org.videolan.vlc)
 - [Waistline](https://f-droid.org/en/packages/com.waist.line)
@@ -51,23 +58,20 @@
 
 
 #### Google Play Apps
-- [AnySoft Keyboard](https://play.google.com/store/apps/details?id=com.menny.android.anysoftkeyboard)
+These apps should be downloaded & installed with [Aurora App Store](https://f-droid.org/en/packages/com.aurora.store):
 - [Brave](https://play.google.com/store/apps/details?id=com.brave.browser)
 - [Dropbox](https://play.google.com/store/apps/details?id=com.dropbox.android)
 - [F-Stop](https://play.google.com/store/apps/details?id=com.fstop.photo.key)
 - [Fate/GO](https://play.google.com/store/apps/details?id=com.aniplex.fategrandorder.en)
-- ~~[Human Japanese](https://play.google.com/store/apps/details?id=com.braksoftware.HumanJapanese)~~ (app requires GooglePlay to verify license)
-- ~~[Human Japanese Intermediate](https://play.google.com/store/apps/details?id=com.braksoftware.HumanJapaneseIntermediate)~~ (app requires GooglePlay to verify license)
 - [ibisPaint X](https://play.google.com/store/apps/details?id=jp.ne.ibis.ibispaintx.app)
 - [Keybase](https://play.google.com/store/apps/details?id=io.keybase.ossifrage)
-- [Moon+ Reader Pro](https://play.google.com/store/apps/details?id=com.flyersoft.moonreaderp)
 - [Pixiv](https://play.google.com/store/apps/details?id=jp.pxv.android)
 - [Privacy](https://play.google.com/store/apps/details?id=com.privacy.pay)
-- [Proton Mail](https://play.google.com/store/apps/details?id=ch.protonmail.android)
 - [Steam](https://play.google.com/store/apps/details?id=com.valvesoftware.android.steam.community)
 
 
 #### 3rd Party Apps
+These app apks should be downloaded directly & installed manually:
 - [Bromite](https://www.bromite.org)
 - [Orbot](https://github.com/guardianproject/orbot)
 - [Poweramp](https://powerampapp.com/download-poweramp/)
