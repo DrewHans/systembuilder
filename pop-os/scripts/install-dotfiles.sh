@@ -26,9 +26,9 @@ then
 	echo "Cloning ${repo_name}"
 	git clone ${dotfiles_repo_url}
 
-	cd ./${repo_name}
+	cd ./${repo_name}/pop-os
 
-	echo "Running ${repo_name} installer.sh"
+	echo "Running ${repo_name}/pop-os installer.sh"
 	bash ./installer.sh
 	echo ""
 
