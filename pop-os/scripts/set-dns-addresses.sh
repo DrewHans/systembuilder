@@ -23,13 +23,62 @@ if [[ $(ls -1q /etc/NetworkManager/system-connections | wc -l) -eq 0 ]]; then
 fi
 
 if [[ $(ls -1q /etc/NetworkManager/system-connections | wc -l) -ne 0 ]]; then
-	# set ipv4 dns addresses
-	find /etc/NetworkManager/system-connections -type f -exec \
-		sed -i -e '/^\[ipv4\]$/,/^\[/ s/^dns=.*$/dns=9.9.9.9;149.112.112.112;1.1.1.1;1.0.0.1;/m' {} \;
 
-	# set ipv6 dns addresses
-	find /etc/NetworkManager/system-connections -type f -exec \
-		sed -i -e '/^\[ipv6\]$/,/^\[/ s/^dns=.*$/dns=2620:fe::fe;2620:fe::9;2606:4700:4700::1111;2606:4700:4700::1001;/m' {} \;
+	for f in /etc/NetworkManager/system-connections/*.nmconnection; do
+		echo "Backing up $f"
+		cp "$f" "$f.backup"
+
+		echo "Updating wifi configuration in $f"
+
+		# set wifi field
+		patternStart="^\[wifi\]$"
+		patternEnd="^mode=infrastructure$"
+
+		insertText="\[wifi\]\n"
+		insertText+="cloned-mac-address=random\n"
+		insertText+="mode=infrastructure"
+
+		sedPattern="/"
+		sedPattern+="$patternStart"
+		sedPattern+="/,/"
+		sedPattern+="$patternEnd"
+		sedPattern+="/c\\"
+		sedPattern+="$insertText"
+
+		sed -i -e "$sedPattern" "$f"
+
+
+		# set ipv4 & ipv6 fields
+		patternStart="^\[ipv4\]$"
+		patternEnd="^\[proxy\]$"
+
+		insertText="\[ipv4\]\n"
+		insertText+="dns=9.9.9.9;149.112.112.112;1.1.1.1;1.0.0.1;\n"
+		insertText+="ignore-auto-dns=true\n"
+		insertText+="method=auto\n"
+		insertText+="\n"
+		insertText+="\[ipv6\]\n"
+		insertText+="addr-gen-mode=stable-privacy\n"
+		insertText+="dns=2620:fe::fe;2620:fe::9;2606:4700:4700::1111;2606:4700:4700::1001;\n"
+		insertText+="ignore-auto-dns=true\n"
+		insertText+="method=dhcp\n"
+		insertText+="\n"
+		insertText+="\[proxy\]"
+
+		sedPattern="/"
+		sedPattern+="$patternStart"
+		sedPattern+="/,/"
+		sedPattern+="$patternEnd"
+		sedPattern+="/c\\"
+		sedPattern+="$insertText"
+
+		sed -i -e "$sedPattern" "$f"
+
+	done
+
+	# restart NetworkManager to load new configuration
+	systemctl restart NetworkManager
+
 fi
 
 echo "$0 has finished"
