@@ -74,10 +74,13 @@ if [[ $(ls -1q /etc/NetworkManager/system-connections | wc -l) -ne 0 ]]; then
 
 		sed -i -e "$sedPattern" "$f"
 
+		echo ""
+
 	done
 
-	# restart NetworkManager to load new configuration
+	echo "Restarting NetworkManager to load new configuration"
 	systemctl restart NetworkManager
+	echo ""
 
 fi
 
