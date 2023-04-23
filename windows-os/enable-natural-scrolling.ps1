@@ -15,7 +15,7 @@ if ($CurrentWindowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInR
     Exit;
 }
 
-Write-Host "Enabling natural scrolling for mouse & touchpad (will take effect after reboot).";
+Write-Host "Enabling natural scrolling for the mouse scrollwheel (will take effect after reboot).";
 
 Get-PnpDevice -Class Mouse -PresentOnly -Status OK | ForEach-Object {
     "$($_.Name): $($_.DeviceID)";
