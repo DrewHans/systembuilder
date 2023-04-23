@@ -88,6 +88,10 @@ gsettings set org.gnome.shell.keybindings screenshot "['<Shift>Print']"
 gsettings set org.gnome.shell.keybindings screenshot-window "['<Alt>Print']"
 gsettings set org.gnome.shell.keybindings show-screenshot-ui "['Print']"
 
+# configure mouse & touchpad
+gsettings set org.gnome.desktop.peripherals.mouse natural-scroll true
+gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
+
 # configure overrides
 gsettings set org.gnome.shell.overrides attach-modal-dialogs false
 gsettings set org.gnome.shell.overrides dynamic-workspaces true
