@@ -15,15 +15,14 @@ if ($CurrentWindowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInR
     Exit;
 }
 
-Write-Host "Enabling natural scrolling for the mouse scrollwheel (will take effect after reboot).";
-
-Get-PnpDevice -Class Mouse -PresentOnly -Status OK | ForEach-Object {
-    # set FlipFlopWheel DWORD to 1 (0 is default scroll direction, 1 is reversed direction [aka natural scrolling])
-    Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Enum\$($_.DeviceID)\Device Parameters" -Name FlipFlopWheel -Value 1;
+# check choco is installed
+$chocoVersion = powershell choco -v;
+IF (-not($chocoVersion)) {
+    Write-Host "Chocolatey is missing. Attempting install now."
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin";
+} ELSE {
+    Write-Host "Chocolatey version $chocoVersion detected."
 }
 
 Write-Host "Finished $PSCommandPath";
 PAUSE;
-
-# source 1: https://dotnet-helpers.com/powershell/how-to-check-if-a-powershell-script-is-running-with-admin-privileges/
-# source 2: https://answers.microsoft.com/en-us/windows/forum/all/reverse-mouse-wheel-scroll/657c4537-f346-4b8b-99f8-9e1f52cd94c2

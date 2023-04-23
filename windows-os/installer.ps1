@@ -1,14 +1,16 @@
-:: check choco is installed
-where /q choco
-IF ERRORLEVEL 1 (
-    ECHO Chocolatey is missing. Attempting install now.
-    :: Install choco .exe and add choco to PATH
-    @powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-) ELSE (
-    ECHO Chocolatey detected.
-)
+Write-Host "Starting $PSCommandPath";
 
-ECHO Installing software packages with choco.
+# check choco is installed
+$chocoVersion = powershell choco -v;
+IF (-not($chocoVersion)) {
+    Write-Host "Chocolatey is missing."
+    Write-Warning "Open a PowerShell console as an administrator and try running choco-installer.ps1.";
+    Exit;
+} ELSE {
+    Write-Host "Chocolatey version $chocoVersion detected."
+}
+
+Write-Host "Installing software packages with choco."
 
 choco install 7zip --yes
 choco install bleachbit --yes
@@ -29,7 +31,7 @@ choco install vscodium --yes
 choco install vlc --yes
 choco install zoom --yes
 
-ECHO Installing programming language packages with choco.
+Write-Host "Installing programming language packages with choco."
 
 choco install dotnet --yes
 choco install dotnetcore --yes
@@ -37,3 +39,6 @@ choco install nodejs --yes
 choco install openjdk --yes
 choco install python --yes
 choco install rust --yes
+
+Write-Host "Finished $PSCommandPath";
+PAUSE;
