@@ -1,3 +1,5 @@
+Set-ExecutionPolicy Bypass -Scope Process -Force;
+
 Write-Host "Starting $PSCommandPath";
 
 # GetCurrent() returns a WindowsIdentity object that represents the current Windows user

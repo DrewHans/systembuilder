@@ -1,14 +1,6 @@
-Write-Host "Starting $PSCommandPath";
+Set-ExecutionPolicy Bypass -Scope Process -Force;
 
-# check choco is installed
-$chocoVersion = powershell choco -v;
-IF (-not($chocoVersion)) {
-    Write-Host "Chocolatey is missing."
-    Write-Warning "Open a PowerShell console as an administrator and try running choco-installer.ps1.";
-    Exit;
-} ELSE {
-    Write-Host "Chocolatey version $chocoVersion detected."
-}
+Write-Host "Starting $PSCommandPath";
 
 Write-Host "Installing software packages with choco."
 

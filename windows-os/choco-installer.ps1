@@ -1,3 +1,5 @@
+Set-ExecutionPolicy Bypass -Scope Process -Force;
+
 Write-Host "Starting $PSCommandPath";
 
 # GetCurrent() returns a WindowsIdentity object that represents the current Windows user
@@ -15,14 +17,13 @@ if ($CurrentWindowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInR
     Exit;
 }
 
-# check choco is installed
-$chocoVersion = powershell choco -v;
-IF (-not($chocoVersion)) {
-    Write-Host "Chocolatey is missing. Attempting install now."
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin";
-} ELSE {
-    Write-Host "Chocolatey version $chocoVersion detected."
-}
+Write-Host "Installing chocolatey"
+
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
+
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'));
+
+Write-Host "Installed chocolatey version $(choco -v)"
 
 Write-Host "Finished $PSCommandPath";
 PAUSE;
