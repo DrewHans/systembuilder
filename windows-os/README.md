@@ -13,10 +13,10 @@ Close powershell when finished.
 
 ### Step 2: Install Software Packages
 
-Open powershell (not as admin) and run this command:
+Open powershell as admin and run this command:
 `powershell -executionpolicy bypass -File .\installer.ps1`
 
-This should install software for just your user account.
+This should install the software and programming language packages we want.
 
 ### Optional: Reverse scroll wheel direction
 
