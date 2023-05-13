@@ -65,12 +65,7 @@ if [[ $(ls -1q /etc/NetworkManager/system-connections | wc -l) -ne 0 ]]; then
 		insertText+="\n"
 		insertText+="\[proxy\]"
 
-		sedPattern="/"
-		sedPattern+="$patternStart"
-		sedPattern+="/,/"
-		sedPattern+="$patternEnd"
-		sedPattern+="/c\\"
-		sedPattern+="$insertText"
+		sedPattern="/$patternStart/,/$patternEnd/c\\$insertText"
 
 		sed -i -e "$sedPattern" "$f"
 

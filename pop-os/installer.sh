@@ -20,6 +20,9 @@ sudo bash ./scripts/install-deps.sh  | tee -a /home/${SUDO_USER}/systembuilder_o
 # create links
 sudo bash ./scripts/create-links.sh  | tee -a /home/${SUDO_USER}/systembuilder_output.log
 
+# enable wayland
+sudo bash ./scripts/enable-wayland.sh  | tee -a /home/${SUDO_USER}/systembuilder_output.log
+
 # set dns addresses
 sudo bash ./scripts/set-dns-addresses.sh  | tee -a /home/${SUDO_USER}/systembuilder_output.log
 
