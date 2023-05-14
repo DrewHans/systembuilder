@@ -79,6 +79,12 @@ gsettings set org.gnome.shell.extensions.pop-cosmic show-applications-button tru
 gsettings set org.gnome.shell.extensions.pop-cosmic show-workspaces-button true
 gsettings set org.gnome.shell.extensions.pop-cosmic workspace-picker-left true
 
+# configure windows
+gsettings set org.gnome.mutter auto-maximize true
+gsettings set org.gnome.mutter center-new-windows false
+gsettings set org.gnome.mutter draggable-border-width 20
+gsettings set org.gnome.mutter workspaces-only-on-primary false
+
 # configure keyboard shortcuts
 gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>Escape', '<Super>l']"  # lock pc
 gsettings set org.gnome.settings-daemon.plugins.media-keys logout "['<Control><Alt>Delete']"  # logout
