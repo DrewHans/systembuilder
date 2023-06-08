@@ -107,10 +107,9 @@ gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 
 # configure fonts
 if [ -f "/home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf" ]; then
-	# font types and font sizes
+	# regular font type and sizes
 	gsettings set org.gnome.desktop.interface font-name 'Atkinson Hyperlegible 12'
 	gsettings set org.gnome.desktop.interface document-font-name 'Atkinson Hyperlegible 11'
-	gsettings set org.gnome.desktop.interface monospace-font-name 'Fira Mono 11'
 
 	# legacy font type and font size
 	gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Atkinson Hyperlegible 12'
@@ -123,6 +122,15 @@ fi
 
 if [ ! -f "/home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf" ]; then
 	echo "WARNING: /home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf not found"
+fi
+
+if [ -f "/home/${USER}/.fonts/intelone-mono-font-family-regular.otf" ]; then
+	# monospace font type and sizes
+	gsettings set org.gnome.desktop.interface monospace-font-name 'IntelOne Mono 11'
+fi
+
+if [ ! -f "/home/${USER}/.fonts/intelone-mono-font-family-regular.otf" ]; then
+	echo "WARNING: /home/${USER}/.fonts/intelone-mono-font-family-regular.otf not found"
 fi
 
 echo "$0 has finished"
