@@ -14,7 +14,7 @@ check_is_root
 
 if command -v "apt" > /dev/null 2>&1
 then
-	apt update && apt upgrade --yes
+	apt update && apt full-upgrade --yes
 	apt autoremove --yes
 else
 	echo "apt is not installed, skipping"
