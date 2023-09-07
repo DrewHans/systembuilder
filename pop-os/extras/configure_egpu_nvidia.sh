@@ -29,8 +29,13 @@ sudo touch /etc/modprobe.d/blacklist-nvidia-nouveau.conf
 echo 'blacklist nouveau' | sudo tee -a /etc/modprobe.d/blacklist-nvidia-nouveau.conf
 echo 'options nouveau modeset=0' | sudo tee -a /etc/modprobe.d/blacklist-nvidia-nouveau.conf
 
-# Step 4: enable NVIDIA DRM support by adding this to kernel options
+# Step 4a: enable NVIDIA DRM support by adding this to kernel options
 sudo kernelstub -a "nvidia-drm.modeset=1"
+
+# Step 4b: allow hotplugging (experimental, might not work for all GPUs)
+sudo kernelstub -a "pcie_ports=native"
+sudo kernelstub -a "pci=assign-busses,hpbussize=0x33,realloc,hpmmiosize=128M,hpmmioprefsize=512M,nocrs"
+# note: check lspci -vv to see what GPU reports when working and change values above as necessary
 
 # Step 5: install egpu-switcher to autogenerate required x11 config files
 wget https://github.com/hertg/egpu-switcher/releases/download/0.19.0/egpu-switcher-amd64
