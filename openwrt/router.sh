@@ -73,6 +73,14 @@ uci set https-dns-proxy.@https-dns-proxy[2].bootstrap_dns='8.8.8.8,8.8.4.4,2001:
 
 uci commit https-dns-proxy
 
+# delete any configuration created during reinstall (after upgrading openwrt)
+uci delete https-dns-proxy-opkg.config
+uci delete https-dns-proxy-opkg.@https-dns-proxy
+while uci -q delete https-dns-proxy-opkg.@https-dns-proxy[0]; do :; done
+
+# delete default config file if it was created during reinstall
+rm /etc/config/https-dns-proxy-opkg
+
 echo "Restarting https-dns-proxy service (to load new configuration)..."
 /etc/init.d/https-dns-proxy restart
 
