@@ -20,5 +20,6 @@ echo "Starting $0"
 }
 
 sudo cp ~/.config/monitors.xml /var/lib/gdm3/.config/monitors.xml
+sudo chown gdm:gdm /var/lib/gdm3/.config/monitors.xml
 
 echo "$0 has finished"
