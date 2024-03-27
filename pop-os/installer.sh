@@ -29,6 +29,9 @@ sudo bash ./scripts/set-dns-addresses.sh  | tee -a /home/${SUDO_USER}/systembuil
 # remove telemetry
 sudo bash ./scripts/remove-telemetry.sh  | tee -a /home/${SUDO_USER}/systembuilder_output.log
 
+# copy monitors.xml
+sudo bash ./scripts/copy-monitors-xml.sh  | tee -a /home/${SUDO_USER}/systembuilder_output.log
+
 # extend sudo timeout
 sudo -v
 
