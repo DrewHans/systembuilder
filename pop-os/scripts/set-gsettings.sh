@@ -106,7 +106,8 @@ gsettings set org.gnome.shell.overrides focus-change-on-pointer-rest true
 gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 
 # configure fonts
-if [ -f "/home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf" ]; then
+if [ -f "/home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf" ]
+then
 	# regular font type and sizes
 	gsettings set org.gnome.desktop.interface font-name 'Atkinson Hyperlegible 12'
 	gsettings set org.gnome.desktop.interface document-font-name 'Atkinson Hyperlegible 11'
@@ -120,16 +121,19 @@ if [ -f "/home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf" ]; then
 	gsettings set org.gnome.desktop.interface font-rgba-order 'rgb'
 fi
 
-if [ ! -f "/home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf" ]; then
+if [ ! -f "/home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf" ]
+then
 	echo "WARNING: /home/${USER}/.fonts/Atkinson-Hyperlegible-Regular-102.otf not found"
 fi
 
-if [ -f "/home/${USER}/.fonts/intelone-mono-font-family-regular.otf" ]; then
+if [ -f "/home/${USER}/.fonts/intelone-mono-font-family-regular.otf" ]
+then
 	# monospace font type and sizes
 	gsettings set org.gnome.desktop.interface monospace-font-name 'IntelOne Mono 11'
 fi
 
-if [ ! -f "/home/${USER}/.fonts/intelone-mono-font-family-regular.otf" ]; then
+if [ ! -f "/home/${USER}/.fonts/intelone-mono-font-family-regular.otf" ]
+then
 	echo "WARNING: /home/${USER}/.fonts/intelone-mono-font-family-regular.otf not found"
 fi
 

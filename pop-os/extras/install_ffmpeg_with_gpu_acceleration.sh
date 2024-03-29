@@ -33,11 +33,12 @@ make
 make install
 cd ..
 
-[ -f /usr/local/bin/lame ] || {
+if [ ! -f /usr/local/bin/lame ]
+then
 	echo "ERROR: lame not found at /usr/local/bin/lame"
 	echo "Something went wrong... aborting"
 	exit 1
-}
+fi
 
 
 # install nv-codec-headers for ffmpeg
@@ -47,11 +48,12 @@ make
 make install
 cd ..
 
-[ -d /usr/local/include/ffnvcodec ] || {
+if [ ! -d /usr/local/include/ffnvcodec ]
+then
 	echo "ERROR: ffnvcodec directory not found at /usr/local/include/ffnvcodec"
 	echo "Something went wrong... aborting"
 	exit 1
-}
+fi
 
 # install ffmpeg
 sudo apt-get install build-essential yasm cmake libtool libc6 libc6-dev unzip wget libnuma1 libnuma-dev
@@ -62,9 +64,11 @@ cd ffmpeg
 make -j 8
 make install
 cd ..
-[ -f /usr/local/bin/ffmpeg ] || {
+
+if [ ! -f /usr/local/bin/ffmpeg ]
+then
 	echo "ERROR: ffmpeg not found at /usr/local/bin/ffmpeg"
 	echo "Something went wrong... aborting"
 	exit 1
-}
+fi
 

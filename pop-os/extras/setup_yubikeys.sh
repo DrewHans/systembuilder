@@ -43,11 +43,12 @@ then
 fi
 
 # create Yubico dir (as user) if it does not exist
-[ -d /home/${USER}/.config/Yubico ] || {
+if [ ! -d /home/${USER}/.config/Yubico ]
+then
 	echo "Making Yubico directory to store u2f_keys"
 	sudo -u ${USER} mkdir -p /home/${USER}/.config/Yubico
 	echo ""
-}
+fi
 
 echo "Making u2f_keys file to store yubikey association data"
 sudo -u ${USER} touch /home/${USER}/.config/Yubico/u2f_keys
@@ -64,11 +65,12 @@ echo "Yubikey association complete"
 echo ""
 
 # create /etc/Yubico dir if it does not exist
-[ -d /etc/Yubico ] || {
+if [ ! -d /etc/Yubico ]
+then
 	echo "Making /etc/Yubico directory to store u2f_keys file"
 	mkdir -p /etc/Yubico
 	echo ""
-}
+fi
 
 # copy u2f_keys file to a location outside of our encrypted HOME
 echo "Moving u2f_keys file to /etc/Yubico"
@@ -77,10 +79,11 @@ sudo chmod 644 /etc/Yubico/u2f_keys
 echo ""
 
 # check gdm-password exists
-[ -f /etc/pam.d/gdm-password ] || {
+if [ ! -f /etc/pam.d/gdm-password ]
+then
 	echo "/etc/pam.d/gdm-password file not found; aborting"
 	exit 1
-}
+fi
 
 # backup pam.d/gdm-password before modification
 echo "Backing up the system's pam.d/gdm-password file"
@@ -97,10 +100,11 @@ if ! grep -qF "authfile=/etc/Yubico/u2f_keys" /etc/pam.d/gdm-password; then
 fi
 
 # check pam.d/login exists
-[ -f /etc/pam.d/login ] || {
+if [ ! -f /etc/pam.d/login ]
+then
 	echo "/etc/pam.d/login file not found; aborting"
 	exit 1
-}
+fi
 
 # backup pam.d/login before modification
 echo "Backing up the system's pam.d/login file"

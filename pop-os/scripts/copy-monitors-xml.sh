@@ -14,10 +14,7 @@ check_is_root
 
 echo "Starting $0"
 
-[ -d /var/lib/gdm3/.config/ ] || {
-	echo "Making /var/lib/gdm3/.config/ directory to store monitors.xml file"
-	mkdir -p /var/lib/gdm3/.config/
-}
+mkdir -p /var/lib/gdm3/.config/
 
 sudo cp ~/.config/monitors.xml /var/lib/gdm3/.config/monitors.xml
 sudo chown gdm:gdm /var/lib/gdm3/.config/monitors.xml
