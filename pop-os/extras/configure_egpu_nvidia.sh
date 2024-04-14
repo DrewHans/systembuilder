@@ -31,6 +31,10 @@ sudo apt install system76-driver-nvidia --yes
 # Step 2: enable nvidia direct rendering manager by adding this kernel option
 sudo kernelstub -a "nvidia-drm.modeset=1"
 
+# Step 2b: add kernel options to fix various errors / warns in dmesg
+sudo kernelstub -a "pci=noaer"
+sudo kernelstub -a "pci=nommconf"
+
 # Step 3: make nvidia driver load faster by embedding it into initrd
 echo 'nvidia' | sudo tee -a /etc/initramfs-tools/modules
 echo 'nvidia-modeset' | sudo tee -a /etc/initramfs-tools/modules
