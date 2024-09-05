@@ -34,7 +34,15 @@ sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin --yes
 
 
-# Verify Installation was successful
+# Verify Installation was successful (as root)
 sudo docker run hello-world
+
+# Allow docker to be run without root
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+
+# Verify docker can be run without root
+docker run hello-world
 
 # source: https://docs.docker.com/engine/install/debian/
